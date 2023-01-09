@@ -24,8 +24,16 @@ public:
 	float Distance(const Vec2D& vec) const;
 	float Dot(const Vec2D& vec) const;
 
+	Vec2D ProjectOnto(const Vec2D& vec2) const;
+
+	float Angle(const Vec2D& vec2) const;
+	Vec2D Reflect(const Vec2D& normal) const;
+
 	Vec2D GetUnitVec() const;
 	Vec2D& Normalize(); 
+
+	void Rotate(float angle, const Vec2D& aroundPoint);
+	Vec2D RotationResult(float angle, Vec2D& aroundPoint) const;
 
 	bool operator==(const Vec2D& other) const;
 	bool operator!=(const Vec2D& other) const;
