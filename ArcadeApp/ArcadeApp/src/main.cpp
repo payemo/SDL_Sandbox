@@ -2,40 +2,18 @@
 #include "SDL2/SDL.h"
 
 #include "Color.h"
-#include "ScreenBuffer.h"
+#include "Screen.h"
 
-const int SCREEN_WIDTH = 480;
-const int SCREEN_HEIGHT = 640;
+const int SCREEN_WIDTH = 224;
+const int SCREEN_HEIGHT = 288;
+const int MAGNIFICATION = 3;
 
 int main(int argc, char* argv[])
 {
-	if (SDL_Init(SDL_INIT_VIDEO))
-	{
-		std::cerr << "SDL_Init failed!" << std::endl;
-		return 1;
-	}
-
-	SDL_Window* window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-
-	if (window == nullptr)
-	{
-		std::cerr << "Could not create window." << std::endl;
-		return 1;
-	}
-
-	SDL_Surface* windowSurface = SDL_GetWindowSurface(window);
-	SDL_PixelFormat* pixFormat = windowSurface->format;
-
-	Color::InitColorFormat(pixFormat);
-
-	ScreenBuffer sb;
-	sb.Init(pixFormat->format, windowSurface->w, windowSurface->h);
-
-	sb.SetPixel(Color::Red(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-
-	SDL_BlitSurface(sb.GetSurface(), nullptr, windowSurface, nullptr);
-
-	SDL_UpdateWindowSurface(window);
+	Screen screen;
+	screen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
+	screen.Draw(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Color::Yellow());
+	screen.SwapScreens();
 
 	SDL_Event event;
 	bool running = true;
@@ -52,8 +30,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	
 
 	return 0;
 } 
