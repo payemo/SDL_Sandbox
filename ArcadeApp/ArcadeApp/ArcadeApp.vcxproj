@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Graphics;$(ProjectDir)\src\Utils;C:\SDL_VC\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Shapes;$(ProjectDir)\src\Graphics;$(ProjectDir)\src\Utils;C:\SDL_VC\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,12 +140,14 @@
     <ClCompile Include="src\Graphics\Screen.cpp" />
     <ClCompile Include="src\Graphics\ScreenBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Shapes\Line2D.cpp" />
     <ClCompile Include="src\Utils\Vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics\Color.h" />
     <ClInclude Include="src\Graphics\Screen.h" />
     <ClInclude Include="src\Graphics\ScreenBuffer.h" />
+    <ClInclude Include="src\Shapes\Line2D.h" />
     <ClInclude Include="src\Utils\Utils.h" />
     <ClInclude Include="src\Utils\Vec2D.h" />
   </ItemGroup>
