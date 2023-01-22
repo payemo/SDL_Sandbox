@@ -12,7 +12,7 @@ public:
 	static void InitColorFormat(const SDL_PixelFormat* format);
 
 	static Color Black() { return Color(0, 0, 0, 255); };
-	static Color Light() { return Color(255, 255, 255, 255); };
+	static Color White() { return Color(255, 255, 255, 255); }
 	static Color Blue() { return Color(0, 0, 255, 255); };
 	static Color Red() { return Color(255, 0, 0, 255); };
 	static Color Green() { return Color(0, 255, 0, 255); };
