@@ -5,8 +5,10 @@
 #include "Color.h"
 
 class Vec2D;
-
 class Line2D;
+class Triangle;
+class AARectangle;
+class Circle;
 struct SDL_Window;
 struct SDL_Surface;
 
@@ -28,6 +30,9 @@ public:
 	void Draw(int x, int y, const Color& color);
 	void Draw(const Vec2D& point, const Color& color);
 	void Draw(const Line2D& line, const Color& color);
+	void Draw(const Triangle& triangle, const Color& color);
+	void Draw(const AARectangle& rect, const Color& color);
+	void Draw(const Circle& circle, const Color& color);
 
 	Screen& operator=(const Screen& screen) = delete;
  

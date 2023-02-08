@@ -137,7 +137,8 @@ Vec2D Vec2D::Reflect(const Vec2D& normal) const
 
 void Vec2D::Rotate(float angle, const Vec2D& aroundPoint)
 {
-	float cos = std::cosf(angle), sin = std::sinf(angle);
+	float cos = std::cosf(angle);
+	float sin = std::sinf(angle);
 	Vec2D thisVec(mX, mY);
 
 	thisVec -= aroundPoint;
