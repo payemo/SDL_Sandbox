@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Scenes;$(ProjectDir)\src\App;$(ProjectDir)\src\Graphics;$(ProjectDir)\src\Shapes;$(ProjectDir)\src\Utils;C:\SDL_VC\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Input;$(ProjectDir)\src\Scenes;$(ProjectDir)\src\App;$(ProjectDir)\src\Graphics;$(ProjectDir)\src\Shapes;$(ProjectDir)\src\Utils;C:\SDL_VC\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +140,7 @@
     <ClCompile Include="src\Graphics\Color.cpp" />
     <ClCompile Include="src\Graphics\Screen.cpp" />
     <ClCompile Include="src\Graphics\ScreenBuffer.cpp" />
+    <ClCompile Include="src\Input\GameController.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Scenes\ArcadeScene.cpp" />
     <ClCompile Include="src\Shapes\AARectangle.cpp" />
@@ -154,6 +155,8 @@
     <ClInclude Include="src\Graphics\Color.h" />
     <ClInclude Include="src\Graphics\Screen.h" />
     <ClInclude Include="src\Graphics\ScreenBuffer.h" />
+    <ClInclude Include="src\Input\GameController.h" />
+    <ClInclude Include="src\Input\InputAction.h" />
     <ClInclude Include="src\Scenes\ArcadeScene.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Shapes\Circle.h" />
