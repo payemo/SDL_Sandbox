@@ -15,6 +15,16 @@ ScreenBuffer::ScreenBuffer(const ScreenBuffer& other)
 	SDL_BlitSurface(other.mSurface, nullptr, mSurface, nullptr);
 }
 
+ScreenBuffer::ScreenBuffer(const ScreenBuffer&& other) 
+	//: mSurface(std::exchange(other.mSurface, nullptr))
+{
+	mSurface = SDL_CreateRGBSurfaceWithFormat(0, other.mSurface->w, other.mSurface->h, 0, other.mSurface->format->format);
+
+	SDL_BlitSurface(other.mSurface, nullptr, mSurface, nullptr);
+
+	delete other.mSurface;
+}
+
 ScreenBuffer::~ScreenBuffer()
 {
 	if (mSurface)
@@ -41,6 +51,37 @@ ScreenBuffer& ScreenBuffer::operator=(const ScreenBuffer& other)
 		mSurface = SDL_CreateRGBSurfaceWithFormat(0, other.mSurface->w, other.mSurface->h, 0, other.mSurface->format->format);
 		SDL_BlitSurface(other.mSurface, nullptr, mSurface, nullptr);
 	}
+
+	return *this;
+}
+
+ScreenBuffer& ScreenBuffer::operator=(const ScreenBuffer&& other)
+{
+	if (this == &other)
+	{
+		return *this;
+	}
+
+	if (mSurface != nullptr)
+	{
+		SDL_FreeSurface(mSurface);
+		mSurface = nullptr;
+	}
+
+	/*if (other.mSurface != nullptr)
+	{
+		mSurface = std::exchange(other.mSurface, nullptr);
+	}*/
+
+	if (other.mSurface != nullptr)
+	{
+		mSurface = SDL_CreateRGBSurfaceWithFormat(0, other.mSurface->w, other.mSurface->h, 0, other.mSurface->format->format);
+		SDL_BlitSurface(other.mSurface, nullptr, mSurface, nullptr);
+
+		delete other.mSurface;
+	}
+
+	return *this;
 }
 
 void ScreenBuffer::Init(uint32_t format, uint32_t width, uint32_t height)

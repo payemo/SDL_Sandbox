@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Shapes;$(ProjectDir)\src\Graphics;$(ProjectDir)\src\Utils;C:\SDL_VC\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Scenes;$(ProjectDir)\src\App;$(ProjectDir)\src\Graphics;$(ProjectDir)\src\Shapes;$(ProjectDir)\src\Utils;C:\SDL_VC\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,10 +136,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\App\App.cpp" />
     <ClCompile Include="src\Graphics\Color.cpp" />
     <ClCompile Include="src\Graphics\Screen.cpp" />
     <ClCompile Include="src\Graphics\ScreenBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Scenes\ArcadeScene.cpp" />
     <ClCompile Include="src\Shapes\AARectangle.cpp" />
     <ClCompile Include="src\Shapes\Circle.cpp" />
     <ClCompile Include="src\Shapes\Line2D.cpp" />
@@ -148,9 +150,12 @@
     <ClCompile Include="src\Utils\Vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\App\App.h" />
     <ClInclude Include="src\Graphics\Color.h" />
     <ClInclude Include="src\Graphics\Screen.h" />
     <ClInclude Include="src\Graphics\ScreenBuffer.h" />
+    <ClInclude Include="src\Scenes\ArcadeScene.h" />
+    <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Shapes\Circle.h" />
     <ClInclude Include="src\Shapes\Line2D.h" />
     <ClInclude Include="src\Shapes\AARectangle.h" />

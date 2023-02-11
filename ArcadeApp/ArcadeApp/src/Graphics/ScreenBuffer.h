@@ -11,8 +11,10 @@ public:
 	ScreenBuffer();
 	ScreenBuffer(const ScreenBuffer& other);
 	~ScreenBuffer();
+	ScreenBuffer(const ScreenBuffer&& other);
 
 	ScreenBuffer& operator=(const ScreenBuffer& other);
+	ScreenBuffer& operator=(const ScreenBuffer&& other);
 
 	void Init(uint32_t format, uint32_t width, uint32_t height);
 
