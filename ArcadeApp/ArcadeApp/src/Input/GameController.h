@@ -6,7 +6,8 @@
 
 class GameController
 {
-	using ActionLookup = std::map<InputKey, ButtonAction>;
+	using InputActionLookup = std::map<InputKey, ButtonAction>;
+	using MouseActionLookup = std::map<MouseButton, MouseButtonAction>;
 public:
 	GameController();
 	InputAction GetActionByKey(InputKey key);
@@ -22,7 +23,17 @@ public:
 	static InputKey UpKey();
 	static InputKey DownKey();
 
+	inline const MouseMovedAction& GetMouseMovedAction() { return mMouseMovedAction; }
+	inline void SetMouseMovedAction(const MouseMovedAction& mouseMovedAction) { mMouseMovedAction = mouseMovedAction; }
+
+	MouseInputAction GetMouseButtonAction(MouseButton button);
+	void AddMouseButtonAction(const MouseButtonAction& mouseButtonAction);
+
+	static MouseButton LeftMouseButton();
+	static MouseButton RightMouseButton();
+
 private:
-	//std::vector<ButtonAction> mButtonActions;
-	ActionLookup mButtonActions;
+	InputActionLookup mButtonActions;
+	MouseActionLookup mMouseButtonActions;
+	MouseMovedAction mMouseMovedAction{ nullptr };
 };

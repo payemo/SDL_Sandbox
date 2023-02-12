@@ -68,3 +68,31 @@ InputKey GameController::DownKey()
 {
 	return static_cast<InputKey>(SDLK_DOWN);
 }
+
+MouseInputAction GameController::GetMouseButtonAction(MouseButton button)
+{
+	if (mMouseButtonActions.count(button) > 0)
+	{
+		return mMouseButtonActions[button].inputAction;
+	}
+
+	return [](InputState state, const MousePosition& mousePos) {};
+}
+
+void GameController::AddMouseButtonAction(const MouseButtonAction& mouseButtonAction)
+{
+	if (mMouseButtonActions.count(mouseButtonAction.button) == 0)
+	{
+		mMouseButtonActions[mouseButtonAction.button] = mouseButtonAction;
+	}
+}
+
+MouseButton GameController::LeftMouseButton()
+{
+	return static_cast<MouseButton>(SDL_BUTTON_LEFT);
+}
+
+MouseButton GameController::RightMouseButton()
+{
+	return static_cast<MouseButton>(SDL_BUTTON_RIGHT);
+}
