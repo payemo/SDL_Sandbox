@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include <stdint.h>
 #include <vector>
+#include "InputController.h"
 
 struct SDL_Window;
 class Scene;
@@ -23,9 +24,7 @@ public:
 	Scene* TopScene(); // current scene
 
 protected:
-	App()
-	{
-	}
+	App() {}
 
 private:
 	static App* mInstance;
@@ -34,4 +33,5 @@ private:
 	SDL_Window* mWindow;
 
 	std::vector<std::unique_ptr<Scene>> mSceneStack;
+	InputController mInputController;
 };

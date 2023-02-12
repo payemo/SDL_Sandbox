@@ -141,6 +141,7 @@
     <ClCompile Include="src\Graphics\Screen.cpp" />
     <ClCompile Include="src\Graphics\ScreenBuffer.cpp" />
     <ClCompile Include="src\Input\GameController.cpp" />
+    <ClCompile Include="src\Input\InputController.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Scenes\ArcadeScene.cpp" />
     <ClCompile Include="src\Shapes\AARectangle.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="src\Graphics\ScreenBuffer.h" />
     <ClInclude Include="src\Input\GameController.h" />
     <ClInclude Include="src\Input\InputAction.h" />
+    <ClInclude Include="src\Input\InputController.h" />
     <ClInclude Include="src\Scenes\ArcadeScene.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Shapes\Circle.h" />
