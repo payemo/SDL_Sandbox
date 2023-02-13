@@ -150,6 +150,7 @@
     <ClCompile Include="src\Shapes\Line2D.cpp" />
     <ClCompile Include="src\Shapes\Shape.cpp" />
     <ClCompile Include="src\Shapes\Triangle.cpp" />
+    <ClCompile Include="src\Utils\FileCommandLoader.cpp" />
     <ClCompile Include="src\Utils\Vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,8 +170,12 @@
     <ClInclude Include="src\Shapes\AARectangle.h" />
     <ClInclude Include="src\Shapes\Shape.h" />
     <ClInclude Include="src\Shapes\Triangle.h" />
+    <ClInclude Include="src\Utils\FileCommandLoader.h" />
     <ClInclude Include="src\Utils\Utils.h" />
     <ClInclude Include="src\Utils\Vec2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Assets\BreakoutLevels.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
