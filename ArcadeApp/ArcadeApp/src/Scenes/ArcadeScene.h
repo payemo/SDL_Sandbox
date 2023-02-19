@@ -5,7 +5,7 @@
 
 class Screen;
 
-enum Game
+enum GameSelector
 {
 	TETRIS = 0,
 	BREAK_OUT,
@@ -24,5 +24,5 @@ public:
 	virtual const std::string& GetSceneName() const override;
 
 private:
-	std::unique_ptr<Scene> GetScene(Game game);
+	std::unique_ptr<Scene> GetScene(GameSelector game);
 };

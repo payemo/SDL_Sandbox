@@ -65,7 +65,7 @@ const std::string& ArcadeScene::GetSceneName() const
 	return sceneName;
 }
 
-std::unique_ptr<Scene> ArcadeScene::GetScene(Game game)
+std::unique_ptr<Scene> ArcadeScene::GetScene(GameSelector game)
 {
 	switch (game)
 	{
