@@ -6,7 +6,7 @@
 class Excluder
 {
 public:
-	virtual ~Excluder();
+	virtual ~Excluder() {};
 
 	void Init(const AARectangle& rect, bool reverseNormals = false);
 	bool HasCollided(const AARectangle& rect, BoundaryEdge& edge) const;

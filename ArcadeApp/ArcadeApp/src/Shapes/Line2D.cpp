@@ -22,7 +22,12 @@ bool Line2D::operator==(const Line2D& line) const
 
 float Line2D::MinDistanceFrom(const Vec2D& p, bool limitToSegment) const
 {
-	return p.Distance(ClosestPoint(p, limitToSegment));
+	Vec2D closestPoint = ClosestPoint(p, limitToSegment);
+	float distance = p.Distance(closestPoint);
+	return distance;
+
+	// I have no idea why is that not working.
+	//return p.Distance(ClosestPoint(p, limitToSegment));
 }
 
 Vec2D Line2D::ClosestPoint(const Vec2D& p, bool limitToSegment) const
@@ -42,7 +47,8 @@ Vec2D Line2D::ClosestPoint(const Vec2D& p, bool limitToSegment) const
 		t = std::fmax(0, std::fmin(1.f, t));
 	}
 
-	return mP0 + p0ToP1 * t;
+	Vec2D res = mP0 + p0ToP1 * t;
+	return res;
 }
 
 Vec2D Line2D::Midpoint() const

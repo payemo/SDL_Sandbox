@@ -6,6 +6,7 @@ void Excluder::Init(const AARectangle& rect, bool reverseNormals)
 {
 	mRect = rect;
 	mReverseNormals = reverseNormals;
+	SetupEdges();
 }
 
 bool Excluder::HasCollided(const AARectangle& rect, BoundaryEdge& edge) const
@@ -39,7 +40,7 @@ bool Excluder::HasCollided(const AARectangle& rect, BoundaryEdge& edge) const
 		}
 		else
 		{
-			if (rect.GetCenterPoint().GetX() > mRect.GetCenterPoint().GetX())
+			if (rect.GetCenterPoint().GetX() < mRect.GetCenterPoint().GetX())
 			{
 				edge = mEdges[LEFT_EDGE];
 			}

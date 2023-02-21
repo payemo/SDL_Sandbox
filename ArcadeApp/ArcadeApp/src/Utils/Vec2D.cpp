@@ -107,7 +107,7 @@ Vec2D& Vec2D::Normalize()
 
 float Vec2D::Distance(const Vec2D& vec) const
 {
-	return (*this - vec).Mag();
+	return (vec - *this).Mag();
 }
 
 float Vec2D::Dot(const Vec2D& vec) const
