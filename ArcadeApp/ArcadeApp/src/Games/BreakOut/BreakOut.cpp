@@ -44,13 +44,19 @@ void BreakOut::Init(GameController& gameController)
 void BreakOut::Update(uint32_t dt)
 {
 	mBall.Update(dt);
-	mPaddle.Update(dt);
+	mPaddle.Update(dt, mBall);
 
 	BoundaryEdge edge;
+
+	if (mPaddle.Bounce(mBall))
+	{
+		return;
+	}
 
 	if (mLevelBoundary.HasCollided(mBall, edge))
 	{
 		mBall.Bounce(edge);
+		return;
 	}
 }
 
