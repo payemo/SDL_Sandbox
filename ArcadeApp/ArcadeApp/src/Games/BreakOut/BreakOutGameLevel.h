@@ -17,6 +17,7 @@ public:
 	void Update(uint32_t dt, Ball& ball);
 	void Draw(Screen& screen);
 
+	bool IsLevelComplete() const;
 	static std::vector<BreakOutGameLevel> LoadLevelsFromFile(const std::string filePath);
 
 private:

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "GameController.h"
 #include "App.h"
+#include "Circle.h"
 
 void BreakOut::Init(GameController& gameController)
 {
@@ -104,6 +105,25 @@ void BreakOut::Update(uint32_t dt)
 		}
 
 		GetCurrentLevel().Update(dt, mBall);
+
+		if (IsBallPassedCutOffY())
+		{
+			ReduceLifeByOne();
+
+			if (!IsGameOver())
+			{
+				SetToServeState();
+			}
+			else
+			{
+				mGameState = IN_GAME_OVER;
+			}
+		}
+		else if (GetCurrentLevel().IsLevelComplete())
+		{
+			mCurrentLevel = (mCurrentLevel + 1) % mLevels.size();
+			ResetGame(mCurrentLevel);
+		}
 	}
 }
 
@@ -113,6 +133,14 @@ void BreakOut::Draw(Screen& screen)
 	mPaddle.Draw(screen);
 	GetCurrentLevel().Draw(screen);
 	screen.Draw(mLevelBoundary.GetRectangle(), Color::White());
+
+	Circle lifeCircle = { Vec2D(7, App::Singletone().Height() - 10), 5 };
+
+	for (int i = 0; i < mLives; ++i)
+	{
+		screen.Draw(lifeCircle, Color::Red(), true, Color::Red());
+		lifeCircle.MoveBy(Vec2D(17, 0));
+	}
 }
 
 const std::string& BreakOut::GetName() const
@@ -121,10 +149,12 @@ const std::string& BreakOut::GetName() const
 	return name;
 }
 
-void BreakOut::ResetGame()
+void BreakOut::ResetGame(size_t toLevel)
 {
 	mLevels = BreakOutGameLevel::LoadLevelsFromFile(App::GetBasePath() + "BreakoutLevels.txt");
-	mCurrentLevel = 2;
+	mYCutOff = App::Singletone().Height() - 2 * Paddle::PADDLE_HEIGHT;
+	mLives = NUM_LIVES;
+	mCurrentLevel = toLevel;
 
 	AARectangle paddleRect = {
 		// Top left
@@ -145,4 +175,17 @@ void BreakOut::SetToServeState()
 	mGameState = IN_SERVE;
 	mBall.Stop();
 	mBall.MoveTo(Vec2D(mPaddle.GetRectangle().GetCenterPoint().GetX(), mPaddle.GetRectangle().GetTopLeftPoint().GetY() - mBall.GetRadius() - 1));
+}
+
+bool BreakOut::IsBallPassedCutOffY() const
+{
+	return mBall.GetPosition().GetY() > mYCutOff;
+}
+
+void BreakOut::ReduceLifeByOne()
+{
+	if (mLives >= 0)
+	{
+		--mLives;
+	}
 }

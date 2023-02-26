@@ -5,6 +5,26 @@
 #include "App.h"
 #include "FileCommandLoader.h"
 
+struct LayoutBlock
+{
+	char symbol = '-';
+	int hp = 0;
+	Color color = Color::Black();
+};
+
+LayoutBlock FindLayoutBlockForSymbol(const std::vector<LayoutBlock>& blocks, char symbol)
+{
+	for (size_t i = 0; i < blocks.size(); ++i)
+	{
+		if (blocks[i].symbol == symbol)
+		{
+			return blocks[i];
+		}
+	}
+
+	return LayoutBlock();
+}
+
 BreakOutGameLevel::BreakOutGameLevel()
 {
 
@@ -111,24 +131,17 @@ void BreakOutGameLevel::CreateDefaultLevel(const AARectangle& boundary)
 	}
 }
 
-struct LayoutBlock
+bool BreakOutGameLevel::IsLevelComplete() const
 {
-	char symbol = '-';
-	int hp = 0;
-	Color color = Color::Black();
-};
-
-LayoutBlock FindLayoutBlockForSymbol(const std::vector<LayoutBlock>& blocks, char symbol)
-{
-	for (size_t i = 0; i < blocks.size(); ++i)
+	for (size_t i = 0; i < mBlocks.size(); ++i)
 	{
-		if (blocks[i].symbol == symbol)
+		if (!mBlocks[i].IsDestroyed() && mBlocks[i].GetHP() != Block::UNBREAKABLE)
 		{
-			return blocks[i];
+			return false;
 		}
 	}
 
-	return LayoutBlock();
+	return true;
 }
 
 std::vector<BreakOutGameLevel> BreakOutGameLevel::LoadLevelsFromFile(const std::string filePath)
