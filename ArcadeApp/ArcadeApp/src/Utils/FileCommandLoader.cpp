@@ -54,7 +54,6 @@ bool FileCommandLoader::LoadFile(const std::string& filePath)
 						params.delimPos = delimPos;
 						params.lineNum = 0;
 						params.line = line;
-
 						mCommands[commandIndex].parseFunc(params);
 					}
 					else // COMMAND_MULTI_LINE
@@ -91,12 +90,13 @@ bool FileCommandLoader::LoadFile(const std::string& filePath)
 Color FileCommandLoader::ReadColor(const ParseFuncParams& params)
 {
 	size_t nextSpacePos = params.line.find_first_of(" ", params.delimPos + 1);
-	size_t& lastSpacePos = nextSpacePos;
+	size_t lastSpacePos = nextSpacePos;
 
 	int r = std::stoi(params.line.substr(params.delimPos, (nextSpacePos - params.delimPos)));
 	nextSpacePos = params.line.find_first_of(" ", lastSpacePos + 1);
 
 	int g = std::stoi(params.line.substr(lastSpacePos + 1, (nextSpacePos - lastSpacePos + 1)));
+	lastSpacePos = nextSpacePos;
 	nextSpacePos = params.line.find_first_of(" ", lastSpacePos + 1);
 
 	int b = std::stoi(params.line.substr(lastSpacePos + 1, (nextSpacePos - lastSpacePos + 1)));

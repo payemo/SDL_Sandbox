@@ -2,6 +2,8 @@
 
 #include "BreakOutGameLevel.h"
 #include "Ball.h"
+#include "App.h"
+#include "FileCommandLoader.h"
 
 BreakOutGameLevel::BreakOutGameLevel()
 {
@@ -31,12 +33,13 @@ void BreakOutGameLevel::Update(uint32_t dt, Ball& ball)
 	for (auto& block : mBlocks)
 	{
 		BoundaryEdge edge;
+		auto ballRect = ball.GetBoundingRect();
 
-		if (!block.IsDestroyed() && block.HasCollided(ball.GetBoundingRect(), edge))
+		if (!block.IsDestroyed() && block.HasCollided(ballRect, edge))
 		{
 			collidedBlocks.push_back(block);
 
-			float mag = block.GetCollisionOffset(ball.GetBoundingRect()).Mag();
+			float mag = block.GetCollisionOffset(ballRect).Mag();
 
 			if (mag > largestMag)
 			{
@@ -55,8 +58,9 @@ void BreakOutGameLevel::Update(uint32_t dt, Ball& ball)
 	for (const auto& block : collidedBlocks)
 	{
 		BoundaryEdge edge;
+		auto ballRect = ball.GetBoundingRect();
 
-		if (block.HasCollided(ball.GetBoundingRect(), edge))
+		if (block.HasCollided(ballRect, edge))
 		{
 			Vec2D p;
 			ball.MakeFlushWithEdge(edge, p, true);
@@ -79,13 +83,12 @@ void BreakOutGameLevel::CreateDefaultLevel(const AARectangle& boundary)
 {
 	mBlocks.clear();
 
-	const int blockWidth = 16;
-	const int blockHeight = 8;
+	int boundaryWidth = static_cast<int>(boundary.GetWidth());
 
-	const int numBlocksAcross = ((int)boundary.GetWidth() - (2 * (blockWidth)) / blockWidth);
+	const int numBlocksAcross = (boundaryWidth - (2 * BLOCK_WIDTH)) / BLOCK_WIDTH;
 	const int numBlocksRows = 5;
 
-	float startX = ((int)boundary.GetWidth() - (numBlocksAcross * (blockWidth + 1))) / 2;
+	float startX = ((int)boundary.GetWidth() - (numBlocksAcross * (BLOCK_WIDTH + 1))) / 2;
 
 	Color colors[numBlocksRows];
 	colors[0] = Color::Red();
@@ -96,14 +99,153 @@ void BreakOutGameLevel::CreateDefaultLevel(const AARectangle& boundary)
 
 	for (int r = 0; r < numBlocksRows; ++r)
 	{
-		AARectangle blockRect = { Vec2D(startX, blockHeight * (r + 1)), blockWidth, blockHeight };
+		AARectangle blockRect = { Vec2D(startX, BLOCK_HEIGHT * (r + 1)), BLOCK_WIDTH, BLOCK_HEIGHT };
 
 		for (int c = 0; c < numBlocksAcross; ++c)
 		{
 			Block b;
 			b.Init(blockRect, 1, Color::Black(), colors[r]);
 			mBlocks.push_back(b);
-			blockRect.MoveBy(Vec2D(blockWidth, 0));
+			blockRect.MoveBy(Vec2D(BLOCK_WIDTH, 0));
 		}
 	}
+}
+
+struct LayoutBlock
+{
+	char symbol = '-';
+	int hp = 0;
+	Color color = Color::Black();
+};
+
+LayoutBlock FindLayoutBlockForSymbol(const std::vector<LayoutBlock>& blocks, char symbol)
+{
+	for (size_t i = 0; i < blocks.size(); ++i)
+	{
+		if (blocks[i].symbol == symbol)
+		{
+			return blocks[i];
+		}
+	}
+
+	return LayoutBlock();
+}
+
+std::vector<BreakOutGameLevel> BreakOutGameLevel::LoadLevelsFromFile(const std::string filePath)
+{
+	std::vector<BreakOutGameLevel> levels;
+
+	std::vector<LayoutBlock> layoutBlocks;
+
+	std::vector<Block> levelBlocks;
+
+	int width = 0;
+	int height = 0;
+
+	FileCommandLoader fileLoader;
+
+	Command levelCommand;
+
+	levelCommand.command = "level";
+	levelCommand.parseFunc = [&](ParseFuncParams params) {
+		if (levels.size() > 0)
+		{
+			levels.back().Load(levelBlocks);
+		}
+		layoutBlocks.clear();
+		levelBlocks.clear();
+		width = 0;
+		height = 0;
+
+		BreakOutGameLevel level;
+		level.Init(AARectangle(Vec2D::Zero, App::Singletone().Width(), App::Singletone().Height()));
+
+		levels.push_back(level);
+	};
+
+	fileLoader.AddCommand(levelCommand);
+
+	Command blockCommand;
+	blockCommand.command = "block";
+	blockCommand.parseFunc = [&](ParseFuncParams params) {
+		LayoutBlock lb;
+
+		layoutBlocks.push_back(lb);
+	};
+
+	fileLoader.AddCommand(blockCommand);
+
+	Command symbolCommand;
+	symbolCommand.command = "symbol";
+	symbolCommand.parseFunc = [&](ParseFuncParams params) {
+		layoutBlocks.back().symbol = FileCommandLoader::ReadChar(params);
+	};
+
+	fileLoader.AddCommand(symbolCommand);
+
+	Command fillColorCommand;
+	fillColorCommand.command = "fillcolor";
+	fillColorCommand.parseFunc = [&](ParseFuncParams params) {
+		layoutBlocks.back().color = FileCommandLoader::ReadColor(params);
+	};
+
+	fileLoader.AddCommand(fillColorCommand);
+
+	Command hpCommand;
+	hpCommand.command = "hp";
+	hpCommand.parseFunc = [&](ParseFuncParams params) {
+		layoutBlocks.back().hp = FileCommandLoader::ReadInt(params);
+	};
+
+	fileLoader.AddCommand(hpCommand);
+
+	Command widthCommand;
+	widthCommand.command = "width";
+	widthCommand.parseFunc = [&](ParseFuncParams params) {
+		width = FileCommandLoader::ReadInt(params);
+	};
+
+	fileLoader.AddCommand(widthCommand);
+
+	Command heightCommand;
+	heightCommand.command = "height";
+	heightCommand.parseFunc = [&](ParseFuncParams params) {
+		height = FileCommandLoader::ReadInt(params);
+	};
+
+	fileLoader.AddCommand(heightCommand);
+
+	Command layoutCommand;
+	layoutCommand.type = COMMAND_MULTI_LINE;
+	layoutCommand.command = "layout";
+	layoutCommand.parseFunc = [&](ParseFuncParams params) {
+
+		float startingX = 0;
+		AARectangle blockRect(Vec2D(startingX, (params.lineNum + 1) * BLOCK_HEIGHT), BLOCK_WIDTH, BLOCK_HEIGHT);
+
+		for (int c = 0; c < params.line.length(); ++c)
+		{
+			if (params.line[c] != '-')
+			{
+				LayoutBlock layoutBlock = FindLayoutBlockForSymbol(layoutBlocks, params.line[c]);
+
+				Block b;
+				b.Init(blockRect, layoutBlock.hp, Color::Black(), layoutBlock.color);
+				levelBlocks.push_back(b);
+			}
+			blockRect.MoveBy(Vec2D(BLOCK_WIDTH, 0));
+		}
+	};
+
+
+	fileLoader.AddCommand(layoutCommand);
+
+	fileLoader.LoadFile(filePath);
+
+	if (levels.size() > 0)
+	{
+		levels.back().Load(levelBlocks);
+	}
+
+	return levels;
 }

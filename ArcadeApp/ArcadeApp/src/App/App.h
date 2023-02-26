@@ -23,6 +23,8 @@ public:
 	void PopScene();
 	Scene* TopScene(); // current scene
 
+	static const std::string& GetBasePath();
+
 protected:
 	App() {}
 
