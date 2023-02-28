@@ -151,7 +151,7 @@ const std::string& BreakOut::GetName() const
 
 void BreakOut::ResetGame(size_t toLevel)
 {
-	mLevels = BreakOutGameLevel::LoadLevelsFromFile(App::GetBasePath() + "BreakoutLevels.txt");
+	mLevels = BreakOutGameLevel::LoadLevelsFromFile(App::GetBasePath() + "src/Assets/BreakoutLevels.txt");
 	mYCutOff = App::Singletone().Height() - 2 * Paddle::PADDLE_HEIGHT;
 	mLives = NUM_LIVES;
 	mCurrentLevel = toLevel;

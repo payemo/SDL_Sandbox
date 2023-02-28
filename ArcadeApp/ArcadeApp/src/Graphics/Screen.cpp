@@ -5,6 +5,7 @@
 #include "AARectangle.h"
 #include "Circle.h";
 #include "Utils.h"
+#include "BMPImage.h"
 #include <SDL2/SDL.h>
 #include <cassert>
 #include <cmath>
@@ -216,6 +217,21 @@ void Screen::Draw(const Circle& circle, const Color& color, bool fill, const Col
 	for (const Line2D& line : lines)
 	{
 		Draw(line, color);
+	}
+}
+
+void Screen::Draw(const BMPImage& image, const Vec2D& pos)
+{
+	uint32_t width = image.GetWidth();
+	uint32_t height = image.GetHeight();
+	auto& imgPixels = image.GetPixels();
+
+	for (int r = 0; r < height; ++r)
+	{
+		for (int c = 0; c < width; ++c)
+		{
+			Draw(c + pos.GetX(), r + pos.GetY(), imgPixels[Get2DIndex(width, r, c)]);
+		}
 	}
 }
 

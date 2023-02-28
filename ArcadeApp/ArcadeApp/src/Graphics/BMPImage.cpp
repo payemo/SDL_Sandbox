@@ -18,14 +18,15 @@ bool BMPImage::Load(const std::string& path)
 
 	mWidth = bmpSurface->w;
 	mHeight = bmpSurface->h;
+	size_t imgBufferSize = mWidth * mHeight;
 	
-	mPixels.reserve(mWidth * mHeight);
+	mPixels.reserve(imgBufferSize);
 
 	SDL_LockSurface(bmpSurface);
 
 	uint32_t* pixels = static_cast<uint32_t*>(bmpSurface->pixels);
 
-	for (int i = 0; i < mPixels.size(); ++i)
+	for (int i = 0; i < imgBufferSize; ++i)
 	{
 		mPixels.push_back(Color(pixels[i]));
 	}

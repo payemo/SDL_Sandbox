@@ -176,5 +176,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\Assets\BreakoutLevels.txt" />
+    <Text Include="src\Assets\ArcadeFont.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Assets\ArcadeFont.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

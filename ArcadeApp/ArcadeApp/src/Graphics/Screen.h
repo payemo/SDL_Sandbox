@@ -12,6 +12,7 @@ class AARectangle;
 class Circle;
 struct SDL_Window;
 struct SDL_Surface;
+class BMPImage;
 
 class Screen
 {
@@ -34,6 +35,7 @@ public:
 	void Draw(const Triangle& triangle, const Color& color, bool fill = false, const Color& fillColor = Color::White());
 	void Draw(const AARectangle& rect, const Color& color, bool fill = false, const Color& fillColor = Color::White());
 	void Draw(const Circle& circle, const Color& color, bool fill = false, const Color& fillColor = Color::White());
+	void Draw(const BMPImage& image, const Vec2D& pos);
 
 	Screen& operator=(const Screen& screen) = delete;
  

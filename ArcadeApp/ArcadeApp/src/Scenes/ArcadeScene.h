@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include <memory>
+#include "BMPImage.h"
 
 class Screen;
 
@@ -25,4 +26,7 @@ public:
 
 private:
 	std::unique_ptr<Scene> GetScene(GameSelector game);
+
+	// for testing purposes
+	BMPImage mTempImage;
 };

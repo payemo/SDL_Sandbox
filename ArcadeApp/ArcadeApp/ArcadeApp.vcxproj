@@ -72,6 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Configuration)</OutDir>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,8 +117,7 @@
       <AdditionalLibraryDirectories>C:\SDL_VC\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /d /y C:\SDL_VC\lib\x64\SDL2.dll $(SolutionDir)$(Configuration)
-xcopy /d /y $(ProjectDir)src\Assets\BreakoutLevels.txt $(SolutionDir)$(Configuration)</Command>
+      <Command>xcopy /d /y C:\SDL_VC\lib\x64\SDL2.dll $(SolutionDir)$(Configuration)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -193,7 +193,17 @@ xcopy /d /y $(ProjectDir)src\Assets\BreakoutLevels.txt $(SolutionDir)$(Configura
     <ClInclude Include="src\Utils\Vec2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Assets\BreakoutLevels.txt" />
+    <Text Include="src\Assets\ArcadeFont.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
+    <Text Include="src\Assets\BreakoutLevels.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Assets\ArcadeFont.bmp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
