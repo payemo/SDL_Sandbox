@@ -145,6 +145,7 @@ xcopy /d /y $(ProjectDir)src\Assets\BreakoutLevels.txt $(SolutionDir)$(Configura
     <ClCompile Include="src\Games\BreakOut\Excluder.cpp" />
     <ClCompile Include="src\Games\BreakOut\LevelBoundary.cpp" />
     <ClCompile Include="src\Games\BreakOut\Paddle.cpp" />
+    <ClCompile Include="src\Graphics\BMPImage.cpp" />
     <ClCompile Include="src\Graphics\Color.cpp" />
     <ClCompile Include="src\Graphics\Screen.cpp" />
     <ClCompile Include="src\Graphics\ScreenBuffer.cpp" />
@@ -172,6 +173,7 @@ xcopy /d /y $(ProjectDir)src\Assets\BreakoutLevels.txt $(SolutionDir)$(Configura
     <ClInclude Include="src\Games\BreakOut\LevelBoundary.h" />
     <ClInclude Include="src\Games\BreakOut\Paddle.h" />
     <ClInclude Include="src\Games\Game.h" />
+    <ClInclude Include="src\Graphics\BMPImage.h" />
     <ClInclude Include="src\Graphics\Color.h" />
     <ClInclude Include="src\Graphics\Screen.h" />
     <ClInclude Include="src\Graphics\ScreenBuffer.h" />

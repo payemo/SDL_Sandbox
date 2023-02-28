@@ -1,0 +1,22 @@
+#pragma once
+
+#include "Color.h"
+#include <vector>
+#include <string>
+#include <stdint.h>
+
+class BMPImage
+{
+public:
+	BMPImage();
+	bool Load(const std::string& path);
+
+	inline const std::vector<Color>& GetPixels() const { return mPixels; }
+	inline uint32_t GetWidth() { return mWidth; }
+	inline uint32_t GetHeight() { return mHeight; }
+
+private:
+	std::vector<Color> mPixels;
+	uint32_t mWidth {0};
+	uint32_t mHeight {0};
+};
