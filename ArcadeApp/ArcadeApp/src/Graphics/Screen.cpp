@@ -5,6 +5,7 @@
 #include "AARectangle.h"
 #include "Circle.h";
 #include "Utils.h"
+#include "SpriteSheet.h"
 #include "BMPImage.h"
 #include <SDL2/SDL.h>
 #include <cassert>
@@ -220,19 +221,25 @@ void Screen::Draw(const Circle& circle, const Color& color, bool fill, const Col
 	}
 }
 
-void Screen::Draw(const BMPImage& image, const Vec2D& pos)
+void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos)
 {
-	uint32_t width = image.GetWidth();
-	uint32_t height = image.GetHeight();
+	uint32_t width = sprite.width;
+	uint32_t height = sprite.height;
 	auto& imgPixels = image.GetPixels();
 
 	for (int r = 0; r < height; ++r)
 	{
 		for (int c = 0; c < width; ++c)
 		{
-			Draw(c + pos.GetX(), r + pos.GetY(), imgPixels[Get2DIndex(width, r, c)]);
+			uint32_t imageWidth = image.GetWidth();
+			Draw(c + pos.GetX(), r + pos.GetY(), imgPixels[Get2DIndex(imageWidth, r + sprite.yPos, c + sprite.xPos)]);
 		}
 	}
+}
+
+void Screen::Draw(const SpriteSheet& spriteSheet, const std::string& spriteName, const Vec2D& pos)
+{
+	Draw(spriteSheet.GetBMPImage(), spriteSheet.GetSprite(spriteName), pos);
 }
 
 void Screen::ClearScreen()

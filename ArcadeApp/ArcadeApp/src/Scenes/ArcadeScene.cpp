@@ -15,7 +15,7 @@ ArcadeScene::ArcadeScene()
 
 void ArcadeScene::Init()
 {
-	mTempImage.Load(App::Singletone().GetBasePath() + "src/Assets/ArcadeFont.bmp");
+	mTempSs.Load("ArcadeFont");
 
 	ButtonAction action;
 	action.key = GameController::ActionKey();
@@ -61,7 +61,7 @@ void ArcadeScene::Draw(Screen& screen)
 	screen.Draw(rect, Color::Blue(), true, Color::Blue());
 	screen.Draw(circle, Color(0, 255, 0, 150), true, Color(0, 255, 0, 150));*/
 
-	screen.Draw(mTempImage, Vec2D::Zero);
+	screen.Draw(mTempSs, "w", Vec2D::Zero);
 }
 
 const std::string& ArcadeScene::GetSceneName() const

@@ -1,5 +1,7 @@
 #pragma once
 #include <cmath>
+#include <algorithm>
+#include <cctype>
 
 namespace Utils
 {
@@ -31,5 +33,17 @@ namespace Utils
 	inline unsigned int Get2DIndex(unsigned int width, unsigned int r, unsigned int c)
 	{
 		return r * width + c;
+	}
+
+	inline bool StringCompare(const std::string& str1, const std::string& str2)
+	{
+		if (str1.length() == str2.length())
+		{
+			return std::equal(str1.begin(), str1.end(), str2.begin(), [](unsigned char a, unsigned char b) {
+				return std::tolower(a) == std::tolower(b);
+			});
+		}
+
+		return false;
 	}
 }
