@@ -2,7 +2,6 @@
 
 #include "Scene.h"
 #include <memory>
-#include "SpriteSheet.h"
 
 class Screen;
 
@@ -26,7 +25,4 @@ public:
 
 private:
 	std::unique_ptr<Scene> GetScene(GameSelector game);
-
-	// for testing purposes
-	SpriteSheet mTempSs;
 };

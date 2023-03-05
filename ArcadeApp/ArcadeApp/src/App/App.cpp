@@ -19,6 +19,12 @@ App& App::Singletone()
 
 bool App::Init(uint32_t width, uint32_t height, uint32_t mag)
 {
+	if (!mFont.Load("ArcadeFont"))
+	{
+		std::cout << "Could not load Arcade font!" << std::endl;
+		return false;
+	}
+
 	mWindow = mScreen.Init(width, height, mag);
 
 	std::unique_ptr<ArcadeScene> arcadeScene = std::make_unique<ArcadeScene>();

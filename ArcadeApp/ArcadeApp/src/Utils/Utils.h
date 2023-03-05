@@ -46,4 +46,10 @@ namespace Utils
 
 		return false;
 	}
+
+	struct Size
+	{
+		unsigned int width = 0;
+		unsigned int height = 0;
+	};
 }
