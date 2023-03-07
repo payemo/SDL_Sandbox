@@ -55,7 +55,7 @@ void ArcadeScene::Draw(Screen& screen)
 	AARectangle rect = { Vec2D::Zero, App::Singletone().Width(), App::Singletone().Height() };
 	Vec2D textDrawPosition = font.GetDrawPosition(GetSceneName(), rect, BFXA_CENTER, BFYA_CENTER);
 
-	screen.Draw(font, GetSceneName(), textDrawPosition);
+	screen.Draw(font, GetSceneName(), textDrawPosition, Color::Red());
 }
 
 const std::string& ArcadeScene::GetSceneName() const
