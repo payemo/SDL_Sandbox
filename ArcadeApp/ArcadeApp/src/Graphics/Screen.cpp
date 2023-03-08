@@ -13,13 +13,30 @@
 #include <cmath>
 #include <algorithm>
 
-Screen::Screen() : mWidth(0), mHeight(0), mWindow(nullptr)
+Screen::Screen()
 {
-
 }
 
 Screen::~Screen()
 {
+	if (mPixelFormat)
+	{
+		SDL_FreeFormat(mPixelFormat);
+		mPixelFormat = nullptr;
+	}
+
+	if (mTexture)
+	{
+		SDL_DestroyTexture(mTexture);
+		mTexture = nullptr;
+	}
+
+	if (mRenderer)
+	{
+		SDL_DestroyRenderer(mRenderer);
+		mRenderer = nullptr;
+	}
+
 	if (mWindow)
 	{
 		SDL_DestroyWindow(mWindow);
@@ -28,8 +45,10 @@ Screen::~Screen()
 	}
 }
 
-SDL_Window* Screen::Init(uint32_t w, uint32_t h, uint32_t mag)
+SDL_Window* Screen::Init(uint32_t w, uint32_t h, uint32_t mag, bool accelerate)
 {
+	mAccelerate = accelerate;
+
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
 		std::cerr << "SDL_Init failed!" << std::endl;
@@ -43,13 +62,41 @@ SDL_Window* Screen::Init(uint32_t w, uint32_t h, uint32_t mag)
 
 	if (mWindow)
 	{
-		mWindowSurface = SDL_GetWindowSurface(mWindow);
-		SDL_PixelFormat* pixFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
-		Color::InitColorFormat(pixFormat);
+		uint8_t rClear = 0;
+		uint8_t gClear = 0;
+		uint8_t bClear = 0;
+		uint8_t aClear = 255;
 
-		mClearColor = Color::Black();
+		if (mAccelerate)
+		{
+			mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-		mBackBuffer.Init(pixFormat->format, mWidth, mHeight);
+			if (mRenderer == nullptr)
+			{
+				std::cout << "SDL_CreateRenderer failed!" << std::endl;
+				return nullptr;
+			}
+
+			SDL_SetRenderDrawColor(mRenderer, rClear, gClear, bClear, aClear);
+		}
+		else
+		{
+			mWindowSurface = SDL_GetWindowSurface(mWindow);
+		}
+
+		//auto windowPixFormat = SDL_GetWindowPixelFormat(mWindow);
+		mPixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
+
+		if (mAccelerate)
+		{
+			mTexture = SDL_CreateTexture(mRenderer, mPixelFormat->format, SDL_TEXTUREACCESS_STREAMING, w, h);
+		}
+
+		Color::InitColorFormat(mPixelFormat);
+
+		mClearColor = Color(rClear, gClear, bClear, aClear);
+
+		mBackBuffer.Init(mPixelFormat->format, mWidth, mHeight);
 		mBackBuffer.Clear(mClearColor);
 	}
 
@@ -64,9 +111,30 @@ void Screen::SwapScreens()
 		// clear the front buffer
 		ClearScreen();
 
-		SDL_BlitScaled(mBackBuffer.GetSurface(), nullptr, mWindowSurface, nullptr);
+		if (mAccelerate)
+		{
+			uint8_t* textureData = nullptr;
+			int texturePitch = 0;
 
-		SDL_UpdateWindowSurface(mWindow);
+			if (SDL_LockTexture(mTexture, nullptr, (void**)&textureData, &texturePitch) >= 0)
+			{
+				SDL_Surface* surface = mBackBuffer.GetSurface();
+
+				std::memcpy(textureData, surface->pixels, surface->w * surface->h * mPixelFormat->BytesPerPixel);
+
+				SDL_UnlockTexture(mTexture);
+
+				SDL_RenderCopy(mRenderer, mTexture, nullptr, nullptr);
+
+				SDL_RenderPresent(mRenderer);
+			}
+		}
+		else
+		{
+			SDL_BlitScaled(mBackBuffer.GetSurface(), nullptr, mWindowSurface, nullptr);
+
+			SDL_UpdateWindowSurface(mWindow);
+		}
 
 		mBackBuffer.Clear(mClearColor);
 	}
@@ -317,7 +385,14 @@ void Screen::ClearScreen()
 	assert(mWindow);
 	if (mWindow)
 	{
-		SDL_FillRect(mWindowSurface, nullptr, mClearColor.GetPixelColor());
+		if (mAccelerate)
+		{
+			SDL_RenderClear(mRenderer);
+		}
+		else
+		{
+			SDL_FillRect(mWindowSurface, nullptr, mClearColor.GetPixelColor());
+		}
 	}
 }
 

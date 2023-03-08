@@ -18,6 +18,9 @@ class BMPImage;
 class SpriteSheet;
 struct Sprite;
 class BitmapFont;
+struct SDL_Renderer;
+struct SDL_PixelFormat;
+struct SDL_Texture;
 
 class Screen
 {
@@ -26,7 +29,7 @@ public:
 	Screen(const Screen& other) = delete;
 	~Screen();
 
-	SDL_Window* Init(uint32_t w, uint32_t h, uint32_t mag);
+	SDL_Window* Init(uint32_t w, uint32_t h, uint32_t mag, bool accelerate = true);
 	void SwapScreens();
 
 	inline void SetClearColor(const Color& clearColor) { mClearColor = clearColor; }
@@ -46,7 +49,7 @@ public:
 	void Draw(const BitmapFont& font, const std::string& textLine, const Vec2D& pos, const Color& overlayColor = Color::White());
 
 	Screen& operator=(const Screen& screen) = delete;
- 
+
 private:
 	using FillPolyFunc = std::function<Color(uint32_t x, uint32_t y)>;
 
@@ -54,12 +57,18 @@ private:
 
 	void FillPoly(const std::vector<Vec2D>& points, FillPolyFunc func);
 
-	uint32_t mWidth;
-	uint32_t mHeight;
+	uint32_t mWidth{ 0 };
+	uint32_t mHeight{ 0 };
 
 	Color mClearColor;
 	ScreenBuffer mBackBuffer;
 
-	SDL_Window* mWindow;
-	SDL_Surface* mWindowSurface;
+	SDL_Window* mWindow{ nullptr };
+	SDL_Surface* mWindowSurface{ nullptr };
+
+	SDL_Renderer* mRenderer{ nullptr };
+	SDL_PixelFormat* mPixelFormat{ nullptr };
+	SDL_Texture* mTexture{ nullptr };
+
+	bool mAccelerate;
 };
