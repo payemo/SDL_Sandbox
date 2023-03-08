@@ -47,6 +47,20 @@ namespace Utils
 		return false;
 	}
 
+	inline float Clamp(float val, float min, float max)
+	{
+		if (val > max)
+		{
+			return max;
+		}
+		else if (val < min)
+		{
+			return min;
+		}
+
+		return val;
+	}
+
 	struct Size
 	{
 		unsigned int width = 0;
