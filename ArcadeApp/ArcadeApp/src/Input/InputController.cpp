@@ -17,14 +17,6 @@ void InputController::Update(uint32_t dt)
 		case SDL_QUIT:
 			mQuit(dt, SDL_PRESSED);
 			break;
-		case SDL_KEYDOWN:
-		case SDL_KEYUP:
-			if (mCurrentGameController)
-			{
-				InputAction action = mCurrentGameController->GetActionByKey(event.key.keysym.sym);
-				action(dt, static_cast<InputState>(event.key.state));
-			}
-			break;
 		case SDL_MOUSEMOTION:
 		{
 			if (mCurrentGameController)
@@ -53,6 +45,14 @@ void InputController::Update(uint32_t dt)
 				pos.yPos = event.motion.y;
 
 				action(static_cast<InputState>(event.button.state), pos);
+			}
+			break;
+		case SDL_KEYDOWN:
+		case SDL_KEYUP:
+			if (mCurrentGameController)
+			{
+				InputAction action = mCurrentGameController->GetActionByKey(event.key.keysym.sym);
+				action(dt, static_cast<InputState>(event.key.state));
 			}
 			break;
 		}

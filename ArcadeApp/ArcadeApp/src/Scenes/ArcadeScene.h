@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scene.h"
+#include "ButtonOptionsScene.h"
 #include <memory>
 
 class Screen;
@@ -14,7 +14,7 @@ enum GameSelector
 	NUM_GAMES
 };
 
-class ArcadeScene : public Scene
+class ArcadeScene : public ButtonOptionsScene
 {
 public:
 	ArcadeScene();

@@ -8,7 +8,8 @@ GameController::GameController()
 
 InputAction GameController::GetActionByKey(InputKey key)
 {
-	if (mButtonActions.count(key) > 0);
+	InputActionLookup::iterator it = mButtonActions.find(key);
+	if (it != mButtonActions.end())
 	{
 		return mButtonActions[key].action;
 	}

@@ -1,46 +1,37 @@
 #include <iostream>
-#include "ArcadeScene.h"
 #include "Screen.h"
-#include "Line2D.h"
-#include "AARectangle.h"
-#include "Triangle.h"
-#include "Circle.h"
-#include "Color.h"
+#include "ArcadeScene.h"
 #include "GameController.h"
 #include "App.h"
+#include "GameScene.h"
+#include "BreakOut.h"
+#include "NotImplementedScene.h"
 
-ArcadeScene::ArcadeScene()
+ArcadeScene::ArcadeScene() :
+	ButtonOptionsScene({ "Tetris", "Break Out!", "Asteroids", "Pac-man" }, Color::Cyan())
 {
 }
 
 void ArcadeScene::Init()
 {
-	ButtonAction action;
-	action.key = GameController::ActionKey();
-	action.action = [](uint32_t dt, InputState state)
-	{
-		if (GameController::IsPressed(state))
-		{
-			std::cout << "Action button was pressed." << std::endl;
-		}
-	};
+	std::vector<Button::ButtonAction> actions;
 
-	mGameController.AddInputAction(action);
+	actions.push_back([this] {
+		App::Singletone().PushScene(GetScene(TETRIS));
+	});
+	actions.push_back([this] {
+		App::Singletone().PushScene(GetScene(BREAK_OUT));
+	});
+	actions.push_back([this] {
+		App::Singletone().PushScene(GetScene(ASTEROIDS));
+	});
+	actions.push_back([this] {
+		App::Singletone().PushScene(GetScene(PACMAN));
+	});
 
-	/*MouseButtonAction mouseAction;
-	mouseAction.button = GameController::LeftMouseButton();
-	mouseAction.inputAction = [](InputState state, const MousePosition& mousePos)
-	{
-		if (GameController::IsPressed(state))
-		{
-			std::cout << "Mouse button was pressed." << std::endl;
-		}
-	};*/
+	SetButtonActions(actions);
 
-	/*mGameController.AddMouseButtonAction(mouseAction);
-	mGameController.SetMouseMovedAction([](const MousePosition& mousePos) {
-		std::cout << "Mouse X position: " << mousePos.xPos << ", mouse Y position: " << mousePos.yPos << std::endl;
-	});*/
+	ButtonOptionsScene::Init();
 }
 
 void ArcadeScene::Update(uint32_t dt)
@@ -50,12 +41,7 @@ void ArcadeScene::Update(uint32_t dt)
 
 void ArcadeScene::Draw(Screen& screen)
 {
-	const BitmapFont& font = App::Singletone().GetFont();
-
-	AARectangle rect = { Vec2D::Zero, App::Singletone().Width(), App::Singletone().Height() };
-	Vec2D textDrawPosition = font.GetDrawPosition(GetSceneName(), rect, BFXA_CENTER, BFYA_CENTER);
-
-	screen.Draw(font, GetSceneName(), textDrawPosition, Color::Red());
+	ButtonOptionsScene::Draw(screen);
 }
 
 const std::string& ArcadeScene::GetSceneName() const
@@ -76,7 +62,10 @@ std::unique_ptr<Scene> ArcadeScene::GetScene(GameSelector game)
 
 	case BREAK_OUT:
 	{
+		std::unique_ptr<BreakOut> breakOutGame = std::make_unique<BreakOut>();
+		std::unique_ptr<GameScene> breakOutScene = std::make_unique<GameScene>(std::move(breakOutGame));
 
+		return breakOutScene;
 	}
 	break;
 
@@ -91,12 +80,9 @@ std::unique_ptr<Scene> ArcadeScene::GetScene(GameSelector game)
 
 	}
 	break;
-	default:
-	{
-
-	}
-	break;
 	}
 
-	return nullptr;
+	std::unique_ptr<Scene> notImplementedScene = std::make_unique<NotImplementedScene>();
+
+	return notImplementedScene;
 }

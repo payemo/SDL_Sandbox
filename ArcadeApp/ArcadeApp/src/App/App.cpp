@@ -3,8 +3,6 @@
 #include <cassert>
 #include "App.h"
 #include "ArcadeScene.h"
-#include "GameScene.h"
-#include "BreakOut.h"
 
 App* App::mInstance = nullptr;
 
@@ -29,14 +27,6 @@ bool App::Init(uint32_t width, uint32_t height, uint32_t mag)
 
 	std::unique_ptr<ArcadeScene> arcadeScene = std::make_unique<ArcadeScene>();
 	PushScene(std::move(arcadeScene));
-
-	//// temp
-	//{
-	//	std::unique_ptr<BreakOut> breakOutGame = std::make_unique<BreakOut>();
-	//	std::unique_ptr<GameScene> breakOutScene = std::make_unique<GameScene>(std::move(breakOutGame));
-
-	//	PushScene(std::move(breakOutScene));
-	//}
 
 	return mWindow != nullptr;
 }
