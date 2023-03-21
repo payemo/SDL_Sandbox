@@ -11,14 +11,14 @@ AnimationFrame Animation::GetAnimationFrame(uint32_t frameNum) const
 {
 	AnimationFrame frame;
 
-	if (frameNum > NumFrames())
+	if (frameNum > mFrames.size())
 	{
 		return frame;
 	}
 
 	frame.frame = mFrames[frameNum];
 
-	if (frameNum < NumFrameColors())
+	if (frameNum < mFrameColors.size())
 	{
 		frame.frameColor = mFrameColors[frameNum];
 		frame.frameColorSet = 1;
@@ -29,12 +29,12 @@ AnimationFrame Animation::GetAnimationFrame(uint32_t frameNum) const
 		frame.overlay = mOverlay;
 	}
 
-	if (frameNum < NumOverlayColos())
+	if (frameNum < mOverlayColors.size())
 	{
 		frame.overlayColor = mOverlayColors[frameNum];
 	}
 
-	if (frameNum < NumFrameOffsets())
+	if (frameNum < mFrameOffsets.size())
 	{
 		frame.offset = mFrameOffsets[frameNum];
 	}
@@ -90,7 +90,7 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 
 	Command framesCommand;
 	framesCommand.command = "frame_keys";
-	framesCommand.command = COMMAND_MULTI_LINE;
+	framesCommand.type = COMMAND_MULTI_LINE;
 	framesCommand.parseFunc = [&](ParseFuncParams params)
 	{
 		animations.back().AddFrame(params.line);
@@ -109,7 +109,7 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 
 	Command frameColorCommand;
 	frameColorCommand.command = "frame_colors";
-	frameColorCommand.command = COMMAND_MULTI_LINE;
+	frameColorCommand.type = COMMAND_MULTI_LINE;
 	frameColorCommand.parseFunc = [&](ParseFuncParams params)
 	{
 		animations.back().AddFrameColor(FileCommandLoader::ReadColor(params));
@@ -119,7 +119,7 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 
 	Command overlayFrameColorCommand;
 	overlayFrameColorCommand.command = "overlay_colors";
-	overlayFrameColorCommand.command = COMMAND_MULTI_LINE;
+	overlayFrameColorCommand.type = COMMAND_MULTI_LINE;
 	overlayFrameColorCommand.parseFunc = [&](ParseFuncParams params)
 	{
 		animations.back().AddOverlayFrameColor(FileCommandLoader::ReadColor(params));
@@ -129,7 +129,7 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 
 	Command frameOffsetsCommand;
 	frameOffsetsCommand.command = "frame_offsets";
-	frameOffsetsCommand.command = COMMAND_MULTI_LINE;
+	frameOffsetsCommand.type = COMMAND_MULTI_LINE;
 	frameOffsetsCommand.parseFunc = [&](ParseFuncParams params)
 	{
 		animations.back().AddFrameOffset(FileCommandLoader::ReadSize(params));

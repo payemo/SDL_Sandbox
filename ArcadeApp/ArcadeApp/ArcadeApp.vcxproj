@@ -140,6 +140,7 @@
     <ClCompile Include="src\App\App.cpp" />
     <ClCompile Include="src\App\Button.cpp" />
     <ClCompile Include="src\Graphics\Animation.cpp" />
+    <ClCompile Include="src\Graphics\AnimationPlayer.cpp" />
     <ClCompile Include="src\Scenes\ButtonOptionsScene.cpp" />
     <ClCompile Include="src\Games\BreakOut\Ball.cpp" />
     <ClCompile Include="src\Games\BreakOut\Block.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="src\App\App.h" />
     <ClInclude Include="src\App\Button.h" />
     <ClInclude Include="src\Graphics\Animation.h" />
+    <ClInclude Include="src\Graphics\AnimationPlayer.h" />
     <ClInclude Include="src\Scenes\ButtonOptionsScene.h" />
     <ClInclude Include="src\Scenes\NotImplementedScene.h" />
     <ClInclude Include="src\Games\BreakOut\Ball.h" />
@@ -211,9 +213,18 @@
     <Text Include="src\Assets\BreakoutLevels.txt">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </Text>
+    <Text Include="src\Assets\PacmanSprites.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
+    <Text Include="src\Assets\Pacman_animations.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Assets\ArcadeFont.bmp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Image>
+    <Image Include="src\Assets\PacmanSprites.bmp">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </Image>
   </ItemGroup>

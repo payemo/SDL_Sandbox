@@ -32,16 +32,29 @@ void ArcadeScene::Init()
 	SetButtonActions(actions);
 
 	ButtonOptionsScene::Init();
+
+	// temp
+	{
+		mAnimationPlayer.Init(App::Singletone().GetBasePath() + "src/Assets/Pacman_animations.txt");
+		mSpriteSheet.Load("PacmanSprites");
+		mAnimationPlayer.Play("move_left", true);
+	}
 }
 
 void ArcadeScene::Update(uint32_t dt)
 {
-
+	mAnimationPlayer.Update(dt);
 }
 
 void ArcadeScene::Draw(Screen& screen)
 {
 	ButtonOptionsScene::Draw(screen);
+
+	AnimationFrame frame = mAnimationPlayer.GetCurrentAnimationFrame();
+
+	Color frameColor = frame.frameColor;
+
+	screen.Draw(mSpriteSheet, frame.frame, frame.offset, frameColor);
 }
 
 const std::string& ArcadeScene::GetSceneName() const

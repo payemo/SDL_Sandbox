@@ -2,6 +2,7 @@
 
 #include "ButtonOptionsScene.h"
 #include <memory>
+#include "AnimationPlayer.h"
 
 class Screen;
 
@@ -25,4 +26,7 @@ public:
 
 private:
 	std::unique_ptr<Scene> GetScene(GameSelector game);
+
+	AnimationPlayer mAnimationPlayer;
+	SpriteSheet mSpriteSheet;
 };

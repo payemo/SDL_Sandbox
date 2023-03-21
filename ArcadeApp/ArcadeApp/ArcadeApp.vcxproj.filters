@@ -105,6 +105,9 @@
     <ClCompile Include="src\Graphics\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\AnimationPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Vec2D.h">
@@ -209,13 +212,21 @@
     <ClInclude Include="src\Graphics\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphics\AnimationPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\Assets\BreakoutLevels.txt" />
     <Text Include="src\Assets\ArcadeFont.txt" />
+    <Text Include="src\Assets\Pacman_animations.txt" />
+    <Text Include="src\Assets\PacmanSprites.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Assets\ArcadeFont.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Assets\PacmanSprites.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

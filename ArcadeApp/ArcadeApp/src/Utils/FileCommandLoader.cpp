@@ -110,7 +110,7 @@ Vec2D FileCommandLoader::ReadSize(const ParseFuncParams& params)
 	size_t nextSpacePos = params.line.find_first_of(" ", params.delimPos + 1);
 	int width = std::stoi(params.line.substr(params.delimPos, nextSpacePos - params.delimPos));
 
-	size_t& lastSpacePos = nextSpacePos;
+	size_t lastSpacePos = nextSpacePos;
 	nextSpacePos = params.line.find_first_of(" ", lastSpacePos + 1);
 
 	int height = std::stoi(params.line.substr(lastSpacePos + 1, nextSpacePos - lastSpacePos));
