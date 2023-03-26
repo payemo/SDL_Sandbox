@@ -11,7 +11,7 @@ void AnimatedSprite::Init(const std::string& animationPath, const SpriteSheet& s
 {
 	mAnimationPlayer.Init(animationPath);
 	mSpriteSheet = &spriteSheet;
-	mColor = Color::Cyan();
+	mColor = color;
 }
 
 void AnimatedSprite::Update(uint32_t dt)
@@ -55,6 +55,7 @@ void AnimatedSprite::Stop()
 
 const AARectangle AnimatedSprite::GetBoundingBox() const
 {
-	AARectangle box = { mPosition, static_cast<uint32_t>(Size().GetX()), static_cast<uint32_t>(Size().GetY()) };
+	float sizeX = Size().GetX(), sizeY = Size().GetY();
+	AARectangle box = { mPosition, static_cast<unsigned int>(sizeX), static_cast<unsigned int>(sizeY) };
 	return box;
 }

@@ -7,7 +7,7 @@ AnimationPlayer::AnimationPlayer()
 
 bool AnimationPlayer::Init(const std::string& animationsPath)
 {
-	mAnimations = Animation::LoadAnimation(animationsPath);
+	mAnimations = Animation::LoadAnimations(animationsPath);
 	return mAnimations.size() > 0;
 }
 
@@ -62,8 +62,9 @@ void AnimationPlayer::Update(uint32_t dt)
 		int fps = mAnimations[mCurrentAnimation].FPS();
 
 		float msPerFrame = static_cast<float>(1000) / static_cast<float>(fps);
+		float t = static_cast<float>(mTime);
 
-		if (static_cast<float>(mTime) > msPerFrame)
+		if (t > msPerFrame)
 		{
 			mTime -= static_cast<uint32_t>(msPerFrame);
 

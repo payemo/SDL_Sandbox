@@ -44,7 +44,7 @@ AnimationFrame Animation::GetAnimationFrame(uint32_t frameNum) const
 	return frame;
 }
 
-std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
+std::vector<Animation> Animation::LoadAnimations(const std::string& filePath)
 {
 	std::vector<Animation> animations;
 
@@ -52,10 +52,10 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 
 	Command animationCommand;
 	animationCommand.command = "animation";
-	animationCommand.parseFunc = [&](ParseFuncParams params) 
+	animationCommand.parseFunc = [&](ParseFuncParams params)
 	{
 		Animation newAnimation;
-		newAnimation.SetName((FileCommandLoader::ReadString(params)));
+		newAnimation.SetName(FileCommandLoader::ReadString(params));
 		animations.push_back(newAnimation);
 	};
 
@@ -65,16 +65,17 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 	spriteSheetCommand.command = "sprite_sheet";
 	spriteSheetCommand.parseFunc = [&](ParseFuncParams params)
 	{
-		animations.back().SetSpriteSheetName((FileCommandLoader::ReadString(params)));
+		animations.back().SetSpriteSheetName(FileCommandLoader::ReadString(params));
 	};
 
 	fileLoader.AddCommand(spriteSheetCommand);
+
 
 	Command sizeCommand;
 	sizeCommand.command = "size";
 	sizeCommand.parseFunc = [&](ParseFuncParams params)
 	{
-		animations.back().SetSize((FileCommandLoader::ReadSize(params)));
+		animations.back().SetSize(FileCommandLoader::ReadSize(params));
 	};
 
 	fileLoader.AddCommand(sizeCommand);
@@ -83,7 +84,7 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 	fpsCommand.command = "fps";
 	fpsCommand.parseFunc = [&](ParseFuncParams params)
 	{
-		animations.back().SetFPS((FileCommandLoader::ReadInt(params)));
+		animations.back().SetFPS(FileCommandLoader::ReadInt(params));
 	};
 
 	fileLoader.AddCommand(fpsCommand);
@@ -102,20 +103,21 @@ std::vector<Animation> Animation::LoadAnimation(const std::string& filePath)
 	overlayCommand.command = "overlay";
 	overlayCommand.parseFunc = [&](ParseFuncParams params)
 	{
-		animations.back().SetOverlay((FileCommandLoader::ReadString(params)));
+		animations.back().SetOverlay(FileCommandLoader::ReadString(params));
 	};
 
 	fileLoader.AddCommand(overlayCommand);
 
-	Command frameColorCommand;
-	frameColorCommand.command = "frame_colors";
-	frameColorCommand.type = COMMAND_MULTI_LINE;
-	frameColorCommand.parseFunc = [&](ParseFuncParams params)
+	Command frameColorsCommand;
+	frameColorsCommand.command = "frame_colors";
+	frameColorsCommand.type = COMMAND_MULTI_LINE;
+	frameColorsCommand.parseFunc = [&](ParseFuncParams params)
 	{
 		animations.back().AddFrameColor(FileCommandLoader::ReadColor(params));
 	};
 
-	fileLoader.AddCommand(frameColorCommand);
+	fileLoader.AddCommand(frameColorsCommand);
+
 
 	Command overlayFrameColorCommand;
 	overlayFrameColorCommand.command = "overlay_colors";

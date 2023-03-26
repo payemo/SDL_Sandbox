@@ -49,7 +49,7 @@ public:
 	size_t NumOverlayColos() const { return mOverlayColors.size(); }
 	size_t NumFrameOffsets() const { return mFrameOffsets.size(); }
 
-	static std::vector<Animation> LoadAnimation(const std::string& filePath);
+	static std::vector<Animation> LoadAnimations(const std::string& filePath);
 
 private:
 	std::string mAnimationName{ "" };
