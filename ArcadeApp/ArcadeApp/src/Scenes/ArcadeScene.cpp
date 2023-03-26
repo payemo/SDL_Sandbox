@@ -6,6 +6,7 @@
 #include "GameScene.h"
 #include "BreakOut.h"
 #include "NotImplementedScene.h"
+#include "PacmanStartScene.h"
 
 ArcadeScene::ArcadeScene() :
 	ButtonOptionsScene({ "Tetris", "Break Out!", "Asteroids", "Pac-man" }, Color::Cyan())
@@ -32,25 +33,15 @@ void ArcadeScene::Init()
 	SetButtonActions(actions);
 
 	ButtonOptionsScene::Init();
-
-	// temp
-	{
-		mSpriteSheet.Load("PacmanSprites");
-		mSprite.Init(App::Singletone().GetBasePath() + "src/Assets/Pacman_animations.txt", mSpriteSheet);
-		mSprite.SetAnimation("death", true);
-	}
 }
 
 void ArcadeScene::Update(uint32_t dt)
 {
-	mSprite.Update(dt);
 }
 
 void ArcadeScene::Draw(Screen& screen)
 {
 	ButtonOptionsScene::Draw(screen);
-
-	mSprite.Draw(screen);
 }
 
 const std::string& ArcadeScene::GetSceneName() const
@@ -86,7 +77,7 @@ std::unique_ptr<Scene> ArcadeScene::GetScene(GameSelector game)
 
 	case PACMAN:
 	{
-
+		return std::make_unique<PacmanStartScene>();
 	}
 	break;
 	}
