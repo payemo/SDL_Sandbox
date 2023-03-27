@@ -117,6 +117,9 @@
     <ClCompile Include="src\Scenes\Pacman\PacmanStartScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Games\Pacman\PacmanLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Vec2D.h">
@@ -233,18 +236,26 @@
     <ClInclude Include="src\Scenes\Pacman\PacmanStartScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Games\Pacman\PacmanLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\Assets\BreakoutLevels.txt" />
     <Text Include="src\Assets\ArcadeFont.txt" />
     <Text Include="src\Assets\Pacman_animations.txt" />
     <Text Include="src\Assets\PacmanSprites.txt" />
+    <Text Include="..\..\..\Games\Archives\Full_Course_Source_Code_v3\src\Assets\Pacman_level.txt" />
+    <Text Include="src\Assets\Pacman_level.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Assets\ArcadeFont.bmp">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="src\Assets\PacmanSprites.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Assets\pacman_level.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

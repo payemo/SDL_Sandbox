@@ -140,6 +140,7 @@
     <ClCompile Include="src\App\App.cpp" />
     <ClCompile Include="src\App\Button.cpp" />
     <ClCompile Include="src\Games\Pacman\PacmanGame.cpp" />
+    <ClCompile Include="src\Games\Pacman\PacmanLevel.cpp" />
     <ClCompile Include="src\Graphics\AnimatedSprite.cpp" />
     <ClCompile Include="src\Graphics\Animation.cpp" />
     <ClCompile Include="src\Graphics\AnimationPlayer.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="src\App\App.h" />
     <ClInclude Include="src\App\Button.h" />
     <ClInclude Include="src\Games\Pacman\PacmanGame.h" />
+    <ClInclude Include="src\Games\Pacman\PacmanLevel.h" />
     <ClInclude Include="src\Graphics\AnimatedSprite.h" />
     <ClInclude Include="src\Graphics\Animation.h" />
     <ClInclude Include="src\Graphics\AnimationPlayer.h" />
@@ -213,6 +215,7 @@
     <ClInclude Include="src\Utils\Vec2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\..\..\Games\Archives\Full_Course_Source_Code_v3\src\Assets\Pacman_level.txt" />
     <Text Include="src\Assets\ArcadeFont.txt">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </Text>
@@ -225,12 +228,18 @@
     <Text Include="src\Assets\Pacman_animations.txt">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </Text>
+    <Text Include="src\Assets\Pacman_level.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Assets\ArcadeFont.bmp">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </Image>
     <Image Include="src\Assets\PacmanSprites.bmp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Image>
+    <Image Include="src\Assets\pacman_level.bmp">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </Image>
   </ItemGroup>
