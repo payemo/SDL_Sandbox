@@ -239,6 +239,9 @@
     <ClInclude Include="src\Games\Pacman\PacmanLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Games\Pacman\PacmanGameUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\Assets\BreakoutLevels.txt" />

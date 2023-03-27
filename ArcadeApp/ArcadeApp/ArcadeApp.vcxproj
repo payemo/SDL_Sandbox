@@ -177,6 +177,7 @@
     <ClInclude Include="src\App\App.h" />
     <ClInclude Include="src\App\Button.h" />
     <ClInclude Include="src\Games\Pacman\PacmanGame.h" />
+    <ClInclude Include="src\Games\Pacman\PacmanGameUtils.h" />
     <ClInclude Include="src\Games\Pacman\PacmanLevel.h" />
     <ClInclude Include="src\Graphics\AnimatedSprite.h" />
     <ClInclude Include="src\Graphics\Animation.h" />
