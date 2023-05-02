@@ -29,7 +29,6 @@ void PacmanStartScene::Init()
 
 	actions.push_back([this]() {
 		auto pacmanGame = std::make_unique<PacmanGame>();
-
 		App::Singletone().PushScene(std::make_unique<GameScene>(std::move(pacmanGame)));
 	});
 

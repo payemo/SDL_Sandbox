@@ -322,10 +322,7 @@ void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos,
 
 	FillPoly(points, [&](uint32_t px, uint32_t py)
 	{
-		Vec2D p = {
-			static_cast<float>(px),
-			static_cast<float>(py)
-		};
+		Vec2D p = { static_cast<float>(px), static_cast<float>(py) };
 		Vec2D d = p - topLeft;
 
 		float u = invXAxisLengthSq * d.Dot(xAxis);
@@ -353,7 +350,9 @@ void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos,
 
 void Screen::Draw(const SpriteSheet& spriteSheet, const std::string& spriteName, const Vec2D& pos, const Color& overlayColor)
 {
-	Draw(spriteSheet.GetBMPImage(), spriteSheet.GetSprite(spriteName), pos, overlayColor);
+	auto& bmpImage = spriteSheet.GetBMPImage();
+	auto sprite = spriteSheet.GetSprite(spriteName);
+	Draw(bmpImage, sprite, pos, overlayColor);
 }
 
 void Screen::Draw(const BitmapFont& font, const std::string& textLine, const Vec2D& pos, const Color& overlayColor)

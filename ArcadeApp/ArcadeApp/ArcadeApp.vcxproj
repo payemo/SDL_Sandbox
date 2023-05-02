@@ -140,6 +140,7 @@
     <ClCompile Include="src\App\App.cpp" />
     <ClCompile Include="src\App\Button.cpp" />
     <ClCompile Include="src\Games\Pacman\Actor.cpp" />
+    <ClCompile Include="src\Games\Pacman\Pacman.cpp" />
     <ClCompile Include="src\Games\Pacman\PacmanGame.cpp" />
     <ClCompile Include="src\Games\Pacman\PacmanLevel.cpp" />
     <ClCompile Include="src\Graphics\AnimatedSprite.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\App\App.h" />
     <ClInclude Include="src\App\Button.h" />
     <ClInclude Include="src\Games\Pacman\Actor.h" />
+    <ClInclude Include="src\Games\Pacman\Pacman.h" />
     <ClInclude Include="src\Games\Pacman\PacmanGame.h" />
     <ClInclude Include="src\Games\Pacman\PacmanGameUtils.h" />
     <ClInclude Include="src\Games\Pacman\PacmanLevel.h" />

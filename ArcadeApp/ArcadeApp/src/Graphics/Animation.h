@@ -52,13 +52,13 @@ public:
 	static std::vector<Animation> LoadAnimations(const std::string& filePath);
 
 private:
-	std::string mAnimationName{ "" };
-	std::string mSpriteSheetName{ "" };
+	std::string mAnimationName;
+	std::string mSpriteSheetName;
 	std::string mOverlay;
 	std::vector<std::string> mFrames;
 	std::vector<Color> mFrameColors;
 	std::vector<Color> mOverlayColors;
 	std::vector<Vec2D> mFrameOffsets;
-	Vec2D mSize{ Vec2D::Zero };
-	int mFPS{ 0 };
+	Vec2D mSize;
+	int mFPS;
 };
