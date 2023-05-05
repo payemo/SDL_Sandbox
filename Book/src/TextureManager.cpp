@@ -1,74 +1,76 @@
 #include "TextureManager.h"
 
-TextureManager::~TextureManager() 
+TextureManager::~TextureManager()
 {
-	for (auto it = texture_map.begin(); it != texture_map.end(); ++it) {
-		delete it->second;
-	}
-	texture_map.clear();
+		for (auto it = texture_map.begin(); it != texture_map.end(); ++it) {
+			delete it->second;
+		}
+		texture_map.clear();
 }
 
 TextureManager* TextureManager::instance = nullptr;
 
 TextureManager* TextureManager::Instance()
 {
-	if (!instance) {
-		instance = new TextureManager;
-	}
-	return instance;
+		if (!instance) {
+			instance = new TextureManager;
+		}
+		return instance;
 }
 
-bool TextureManager::Load(const std::string& fileName, const std::string& id, SDL_Renderer& renderer) 
+bool TextureManager::Load(const std::string& fileName, const std::string& id, SDL_Renderer& renderer)
 {
-	SDL_Surface* tmpSurface = IMG_Load(fileName.c_str());
+		SDL_Surface* tmpSurface = IMG_Load(fileName.c_str());
 
-	if (!tmpSurface)
+		if (!tmpSurface)
+			return false;
+
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(&renderer, tmpSurface);
+
+		SDL_FreeSurface(tmpSurface);
+
+		if (texture) {
+			texture_map[id] = texture;
+			return true;
+		}
+
 		return false;
-
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(&renderer, tmpSurface);
-
-	SDL_FreeSurface(tmpSurface);
-
-	if (texture) {
-		texture_map[id] = texture;
-		return true;
-	}
-
-	return false;
 }
 
-void TextureManager::Draw(const std::string& id, int x, int y, int w, int h, SDL_Renderer& renderer, SDL_RendererFlip flipOption) 
+void TextureManager::Draw(const std::string& id, int x, int y, int w, int h, SDL_Renderer& renderer, SDL_RendererFlip flipOption)
 {
-	SDL_Rect srcRect, destRect;
+		SDL_Rect srcRect, destRect;
 
-	srcRect.x = 0;
-	srcRect.y = 0;
-	srcRect.w = destRect.w = w;
-	srcRect.h = destRect.h = h;
-	destRect.x = x;
-	destRect.y = y;
+		srcRect.x = 0;
+		srcRect.y = 0;
+		srcRect.w = destRect.w = w;
+		srcRect.h = destRect.h = h;
+		destRect.x = x;
+		destRect.y = y;
 
-	SDL_RenderCopyEx(&renderer, texture_map[id], &srcRect, &destRect, 0, 0, flipOption);
+		SDL_RenderCopyEx(&renderer, texture_map[id], &srcRect, &destRect, 0, 0, flipOption);
 }
 
 void TextureManager::DrawFrame(
-	const std::string& id,
-	int x,
-	int y,
-	int w,
-	int h,
-	int currentRow,
-	int currentFrame,
-	SDL_Renderer& renderer,
-	SDL_RendererFlip flipOption)
+		const std::string& id,
+		int x,
+		int y,
+		int w,
+		int h,
+		int currentRow,
+		int currentFrame,
+		SDL_Renderer& renderer,
+		SDL_RendererFlip flipOption)
 {
-	SDL_Rect srcRect, destRect;
-	srcRect.x = w * currentFrame;
-	srcRect.y = h * (currentRow - 1);
-	srcRect.w = destRect.w = w;
-	srcRect.h = destRect.h = h;
-	destRect.x = x;
-	destRect.y = y;
+		SDL_Rect srcRect, destRect;
+		srcRect.x = w * currentFrame;
+		srcRect.y = h * (currentRow - 1);
+		srcRect.w = w;
+		srcRect.h = h;
+		srcRect.w = destRect.w = w;
+		srcRect.h = destRect.h = h;
+		destRect.x = x;
+		destRect.y = y;
 
-	SDL_RenderCopyEx(&renderer, texture_map[id], &srcRect, &destRect, 0, 0, flipOption);
+		SDL_RenderCopyEx(&renderer, texture_map[id], &srcRect, &destRect, 0, 0, flipOption);
 }
