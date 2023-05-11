@@ -139,6 +139,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SDLGameObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Enemy.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\TextureManager.h" />
+    <ClInclude Include="include\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="assets\animate-alpha.png">
