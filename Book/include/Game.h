@@ -12,7 +12,7 @@ public:
     static Game* Instance();
 
 public:
-    //~Game();
+    ~Game();
 
     bool Init(const char* title, int xPos, int yPos, int width, int height, int flags);
 
@@ -21,7 +21,8 @@ public:
     void Render();
     void Clean();
 
-    bool IsRunning() { return is_running; }
+    inline bool IsRunning() { return is_running; }
+    inline void Quit() { is_running = false; }
 
     inline SDL_Renderer& GetRenderer() const { return *renderer; }
 

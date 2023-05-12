@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "InputHandler.h"
 
 Game* Game::m_instance = nullptr;
 
@@ -14,18 +15,16 @@ Game* Game::Instance()
     return m_instance;
 }
 
-//Game::~Game() {
-//    if (!window) {
-//        delete window;
-//    }
-//
-//    if (!renderer) {
-//        delete renderer;
-//    }
-//}
+Game::~Game()
+{
+    delete renderer;
+    delete window;
+}
 
 bool Game::Init(const char* title, int xPos, int yPos, int width, int height, int flags)
 {
+    TheInputHandler::Instance()->InitializedJoysticks();
+
     m_gameObjects.push_back(new Player(
         *(new LoaderParams(100, 100, 128, 82, "animate"))));
     m_gameObjects.push_back(new Enemy(
@@ -33,7 +32,7 @@ bool Game::Init(const char* title, int xPos, int yPos, int width, int height, in
 
     // Init SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-        std::cout << "SDL was initialized successfuly.!" << std::endl;
+        std::cout << "SDL was initialized successfuly!" << std::endl;
 
         window = SDL_CreateWindow(title, xPos, yPos, width, height, flags);
 
@@ -68,19 +67,7 @@ bool Game::Init(const char* title, int xPos, int yPos, int width, int height, in
 }
 
 void Game::HandleEvents() {
-    SDL_Event event;
-
-    if (SDL_PollEvent(&event)) {
-        switch (event.type)
-        {
-        case SDL_QUIT:
-            is_running = false;
-            break;
-
-        default:
-            break;
-        }
-    }
+    TheInputHandler::Instance()->Update();
 }
 
 void Game::Update() {
@@ -100,6 +87,7 @@ void Game::Render() {
 }
 
 void Game::Clean() {
+    TheInputHandler::Instance()->Clean();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
