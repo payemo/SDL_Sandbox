@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Vector2D.h"
 
 class SDLGameObject;
 
@@ -14,8 +15,9 @@ public:
     virtual void Clean() override;
 
 protected:
-    int m_x;
-    int m_y;
+    Vector2D m_position;
+    Vector2D m_velocity;
+    Vector2D m_acceleration;
     int m_w;
     int m_h;
 

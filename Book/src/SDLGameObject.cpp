@@ -2,10 +2,10 @@
 #include "Game.h"
 
 SDLGameObject::SDLGameObject(const LoaderParams& params)
-    : GameObject(params)
+    : GameObject(params), 
+    m_position(params.GetX(), params.GetY()),
+    m_velocity(0, 0), m_acceleration(0, 0)
 {
-    m_x = params.GetX();
-    m_y = params.GetY();
     m_w = params.GetWidth();
     m_h = params.GetHeight();
 
@@ -16,8 +16,8 @@ void SDLGameObject::Draw()
 {
     TextureManager::Instance()->DrawFrame(
         m_textureId,
-        m_x,
-        m_y,
+        static_cast<int>(m_position.GetX()),
+        static_cast<int>(m_position.GetY()),
         m_w,
         m_h,
         m_currentRow,
@@ -27,7 +27,8 @@ void SDLGameObject::Draw()
 
 void SDLGameObject::Update()
 {
-
+    m_velocity += m_acceleration;
+    m_position += m_velocity;
 }
 
 void SDLGameObject::Clean()

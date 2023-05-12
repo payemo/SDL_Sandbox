@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include <string>
 #include "TextureManager.h"
+#include "Vector2D.h"
 
 class LoaderParams
 {
