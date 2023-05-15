@@ -8,4 +8,7 @@ public:
     Player(const LoaderParams& params);
 
     virtual void Update() override;
+
+private:
+    void HandleInput();
 };
