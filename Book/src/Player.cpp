@@ -42,7 +42,23 @@ void Player::HandleInput()
         m_velocity.SetX(1);
     }
 
-    const Vector2D& vec = ih->GetMousePosition();
+    /*const Vector2D& vec = ih->GetMousePosition();
 
-    m_velocity = (vec - m_position) / 100;
+    m_velocity = (vec - m_position) / 100;*/
+
+    if (ih->isKeyDown(SDL_SCANCODE_RIGHT)) {
+        m_velocity.SetX(2);
+    }
+
+    if (ih->isKeyDown(SDL_SCANCODE_LEFT)) {
+        m_velocity.SetX(-2);
+    }
+
+    if (ih->isKeyDown(SDL_SCANCODE_UP)) {
+        m_velocity.SetY(-2);
+    }
+
+    if (ih->isKeyDown(SDL_SCANCODE_DOWN)) {
+        m_velocity.SetY(2);
+    }
 }

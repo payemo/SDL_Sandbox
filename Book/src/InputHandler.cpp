@@ -4,7 +4,9 @@
 
 InputHandler* InputHandler::m_instance = nullptr;
 
-InputHandler::InputHandler() : m_mousePosition(new Vector2D(0, 0))
+InputHandler::InputHandler() : 
+    m_keyStates(0),
+    m_mousePosition(new Vector2D(0, 0))
 {
     for (int i = 0; i < 3; ++i) {
         m_mouseButtonStates.push_back(false);
@@ -142,6 +144,10 @@ void InputHandler::Update()
 
             m_mousePosition->SetX(static_cast<float>(event.motion.x));
             m_mousePosition->SetY(static_cast<float>(event.motion.y));
+        }
+
+        if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+            m_keyStates = SDL_GetKeyboardState(0);
         }
     }
 }
