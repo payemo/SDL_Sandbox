@@ -36,13 +36,22 @@ public:
 
     inline bool GetMouseButtonState(int buttonNumber) { return m_mouseButtonStates[buttonNumber]; }
     inline const Vector2D& GetMousePosition() { return *m_mousePosition; }
+    inline bool GettButtonState(int joy, int buttonNumber) const { return m_buttonStates[joy][buttonNumber]; }
 
-    bool isKeyDown(SDL_Scancode key) {
-        if (m_keyStates != nullptr) {
-            return m_keyStates[key] == 1;
-        }
-        return false;
-    }
+    bool isKeyPressed(SDL_Scancode key);
+
+    // handle keybord
+    void onKeyPressed(SDL_Event& event);
+
+    // handle mouse events
+    void onMouseMove(SDL_Event& event);
+    void onMouseButtonDown(SDL_Event& event);
+    void onMouseButtonUp(SDL_Event& event);
+
+    // handle joystick events
+    void onJoystickAxisMove(SDL_Event& event);
+    void onJoystickButtonDown(SDL_Event& event);
+    void onJoystickButtonUp(SDL_Event& event);
 
 private:
     InputHandler();
@@ -53,8 +62,10 @@ private:
 
     const Uint8* m_keyStates;
 
+    // joystick specific
     std::vector<std::pair<Vector2D*, Vector2D*>> m_joystickValues;
     std::vector<SDL_Joystick*> m_joysticks;
+    std::vector<std::vector<bool>> m_buttonStates;
     bool m_joystickIsInitialized{ false };
 
 private:
