@@ -4,8 +4,11 @@
 
 InputHandler* InputHandler::m_instance = nullptr;
 
-InputHandler::InputHandler()
+InputHandler::InputHandler() : m_mousePosition(new Vector2D(0, 0))
 {
+    for (int i = 0; i < 3; ++i) {
+        m_mouseButtonStates.push_back(false);
+    }
 }
 
 void InputHandler::InitializedJoysticks()
@@ -44,6 +47,8 @@ void InputHandler::Update()
         if (event.type == SDL_QUIT) {
             TheGame::Instance()->Quit();
         }
+
+        // Handle joystick events
 
         if (event.type == SDL_JOYAXISMOTION) {
             int whichOne = event.jaxis.which;
@@ -100,6 +105,44 @@ void InputHandler::Update()
                 }
             }
         }
+
+        // Handle mouse buttons events
+        if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                m_mouseButtonStates[LEFT] = true;
+            }
+
+            if (event.button.button == SDL_BUTTON_MIDDLE) {
+                m_mouseButtonStates[MIDDLE] = true;
+            }
+
+            if (event.button.button == SDL_BUTTON_RIGHT) {
+                m_mouseButtonStates[RIGHT] = true;
+            }
+        }
+
+        if (event.type == SDL_MOUSEBUTTONUP) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                m_mouseButtonStates[LEFT] = false;
+            }
+
+            if (event.button.button == SDL_BUTTON_MIDDLE) {
+                m_mouseButtonStates[MIDDLE] = false;
+            }
+
+            if (event.button.button == SDL_BUTTON_RIGHT) {
+                m_mouseButtonStates[RIGHT] = false;
+            }
+        }
+
+        if (event.type == SDL_MOUSEMOTION) {
+
+            //std::cout << "mouse position X: " << event.motion.x << std::endl;
+            //std::cout << "mouse position Y: " << event.motion.y << std::endl;
+
+            m_mousePosition->SetX(static_cast<float>(event.motion.x));
+            m_mousePosition->SetY(static_cast<float>(event.motion.y));
+        }
     }
 }
 
@@ -118,7 +161,7 @@ int InputHandler::XValue(int joyId, int stick)
         if (stick == 1) {
             return m_joystickValues[joyId].first->GetX();
         }
-        else if(stick == 2) {
+        else if (stick == 2) {
             return m_joystickValues[joyId].second->GetX();
         }
     }

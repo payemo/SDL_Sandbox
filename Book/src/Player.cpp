@@ -37,4 +37,12 @@ void Player::HandleInput()
     if (ih->YValue(0, 2) > 0 || ih->YValue(0, 2) < 0) {
         m_velocity.SetY(ih->YValue(0, 2));
     }
+
+    if (ih->GetMouseButtonState(LEFT)) {
+        m_velocity.SetX(1);
+    }
+
+    const Vector2D& vec = ih->GetMousePosition();
+
+    m_velocity = (vec - m_position) / 100;
 }
