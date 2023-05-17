@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "InputHandler.h"
+#include "MenuState.h"
+#include "PlayerState.h"
 
 Game* Game::m_instance = nullptr;
 
@@ -23,6 +25,9 @@ Game::~Game()
 
 bool Game::Init(const char* title, int xPos, int yPos, int width, int height, int flags)
 {
+    m_gameStateMachine = new GameStateMachine();
+    m_gameStateMachine->ChangeState(new MenuState());
+
     TheInputHandler::Instance()->InitializedJoysticks();
 
     m_gameObjects.push_back(new Player(
@@ -68,6 +73,10 @@ bool Game::Init(const char* title, int xPos, int yPos, int width, int height, in
 
 void Game::HandleEvents() {
     TheInputHandler::Instance()->Update();
+
+    if (TheInputHandler::Instance()->isKeyPressed(SDL_SCANCODE_RETURN)) {
+        m_gameStateMachine->ChangeState(new PlayerState());
+    }
 }
 
 void Game::Update() {

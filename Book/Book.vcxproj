@@ -135,9 +135,12 @@
   <ItemGroup>
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameStateMachine.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayerState.cpp" />
     <ClCompile Include="src\SDLGameObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
@@ -146,8 +149,12 @@
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\GameState.h" />
+    <ClInclude Include="include\GameStateMachine.h" />
     <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\MenuState.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PlayerState.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\Vector2D.h" />

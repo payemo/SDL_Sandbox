@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "GameObject.h"
+#include "GameStateMachine.h"
 
 class Game
 {
@@ -35,6 +36,8 @@ private:
     SDL_Renderer* renderer{ nullptr };
 
     std::vector<GameObject*> m_gameObjects;
+
+    GameStateMachine* m_gameStateMachine{ nullptr };
 
     int currentFrame{ 0 };
 
