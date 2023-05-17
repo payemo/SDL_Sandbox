@@ -27,11 +27,11 @@ void Player::HandleInput()
     }
 
     if (ih->YValue(0, 1) > 0 || ih->YValue(0, 1) < 0) {
-        m_velocity.SetY(ih->YValue(0, 2));
+        m_velocity.SetY(ih->YValue(0, 1));
     }
 
     if (ih->XValue(0, 2) > 0 || ih->XValue(0, 2) < 0) {
-        m_velocity.SetX(ih->XValue(0, 1));
+        m_velocity.SetX(ih->XValue(0, 2));
     }
 
     if (ih->YValue(0, 2) > 0 || ih->YValue(0, 2) < 0) {
@@ -42,9 +42,9 @@ void Player::HandleInput()
         m_velocity.SetX(1);
     }
 
-    const Vector2D& vec = ih->GetMousePosition();
+    /*const Vector2D& vec = ih->GetMousePosition();
 
-    m_velocity = (vec - m_position) / 100;
+    m_velocity = (vec - m_position) / 100;*/
 
     if (ih->isKeyPressed(SDL_SCANCODE_RIGHT)) {
         m_velocity.SetX(2);

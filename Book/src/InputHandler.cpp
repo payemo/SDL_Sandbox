@@ -23,6 +23,9 @@ void InputHandler::InitializedJoysticks()
         for (int i = 0; i < SDL_NumJoysticks(); ++i) {
             SDL_Joystick* joystick = SDL_JoystickOpen(i);
 
+            /*int numAxes = SDL_JoystickNumAxes(joystick);
+            std::cout << "Number of axes: " << numAxes << std::endl;*/
+
             if (SDL_JoystickOpen(i)) {
                 m_joysticks.push_back(joystick);
                 m_joystickValues.push_back(std::make_pair(
@@ -45,7 +48,7 @@ void InputHandler::InitializedJoysticks()
         SDL_JoystickEventState(SDL_ENABLE);
         m_joystickIsInitialized = true;
 
-        std::cout << "Initialized " << m_joysticks.size() << " joystick(s)";
+        std::cout << "Initialized " << m_joysticks.size() << " joystick(s)" << std::endl;
     }
 }
 
@@ -176,6 +179,13 @@ void InputHandler::onMouseButtonUp(SDL_Event& event)
 
 void InputHandler::onJoystickAxisMove(SDL_Event& event)
 {
+//#ifdef _DEBUG
+//
+//    SDL_JoyAxisEvent& joyAxisEvent = event.jaxis;
+//    std::cout << "Axis " << static_cast<int>(event.jaxis.axis) << " value: " << joyAxisEvent.value << std::endl;
+//
+//#endif
+
     int whichOne = event.jaxis.which;
 
     // left stick move left or right
