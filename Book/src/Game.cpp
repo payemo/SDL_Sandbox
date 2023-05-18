@@ -25,16 +25,6 @@ Game::~Game()
 
 bool Game::Init(const char* title, int xPos, int yPos, int width, int height, int flags)
 {
-    m_gameStateMachine = new GameStateMachine();
-    m_gameStateMachine->ChangeState(new MenuState());
-
-    TheInputHandler::Instance()->InitializedJoysticks();
-
-    m_gameObjects.push_back(new Player(
-        *(new LoaderParams(100, 100, 128, 82, "animate"))));
-    m_gameObjects.push_back(new Enemy(
-        *(new LoaderParams(300, 300, 128, 82, "animate"))));
-
     // Init SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         std::cout << "SDL was initialized successfuly!" << std::endl;
@@ -62,9 +52,19 @@ bool Game::Init(const char* title, int xPos, int yPos, int width, int height, in
         return false;
     }
 
-    if (!TheTextureManager::Instance()->Load("assets/animate-alpha.png", "animate", *renderer)) {
+    /*if (!TheTextureManager::Instance()->Load("assets/animate-alpha.png", "animate", *renderer)) {
         return false;
-    }
+    }*/
+
+    TheInputHandler::Instance()->InitializedJoysticks();
+
+    m_gameObjects.push_back(new Player(
+        *(new LoaderParams(100, 100, 128, 82, "animate"))));
+    m_gameObjects.push_back(new Enemy(
+        *(new LoaderParams(300, 300, 128, 82, "animate"))));
+
+    m_gameStateMachine = new GameStateMachine();
+    m_gameStateMachine->ChangeState(new MenuState());
 
     is_running = true;
 
@@ -80,17 +80,13 @@ void Game::HandleEvents() {
 }
 
 void Game::Update() {
-    for (auto obj : m_gameObjects) {
-        obj->Update();
-    }
+    m_gameStateMachine->Update();
 }
 
 void Game::Render() {
     SDL_RenderClear(renderer);
 
-    for (auto obj : m_gameObjects) {
-        obj->Draw();
-    }
+    m_gameStateMachine->Render();
 
     SDL_RenderPresent(renderer);
 }

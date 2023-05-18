@@ -28,6 +28,8 @@ public:
 			SDL_Renderer& renderer,
 			SDL_RendererFlip flipOption = SDL_FLIP_NONE);
 
+		void ClearFromTextureMap(const std::string& id);
+
 private:
 		TextureManager() {}
 

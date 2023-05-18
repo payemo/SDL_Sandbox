@@ -1,6 +1,8 @@
 #pragma once
 
+#include <vector>
 #include "GameState.h"
+#include "GameObject.h"
 
 class MenuState : public GameState
 {
@@ -15,4 +17,6 @@ public:
 
 private:
     static const std::string m_menuId;
+
+    std::vector<GameObject*> m_gameObjects;
 };

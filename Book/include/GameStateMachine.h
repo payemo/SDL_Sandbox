@@ -10,6 +10,9 @@ public:
     void ChangeState(GameState* state);
     void PopState();
 
+    void Update();
+    void Render();
+
 private:
     std::vector<GameState*> m_gameStates;
 };
