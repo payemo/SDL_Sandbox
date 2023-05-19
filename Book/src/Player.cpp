@@ -13,7 +13,7 @@ void Player::Update()
 
     HandleInput();
 
-    m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
+    m_currentFrame = int(((SDL_GetTicks() / 100) % 5));
 
     SDLGameObject::Update();
 }
@@ -21,6 +21,10 @@ void Player::Update()
 void Player::HandleInput()
 {
     InputHandler* ih = TheInputHandler::Instance();
+
+    // mouse moving
+    const Vector2D& vec = ih->GetMousePosition();
+    m_velocity = (vec - m_position) / 50;
 
     if (ih->XValue(0, 1) > 0 || ih->XValue(0, 1) < 0) {
         m_velocity.SetX(ih->XValue(0, 1));
@@ -41,10 +45,6 @@ void Player::HandleInput()
     if (ih->GetMouseButtonState(LEFT)) {
         m_velocity.SetX(1);
     }
-
-    /*const Vector2D& vec = ih->GetMousePosition();
-
-    m_velocity = (vec - m_position) / 100;*/
 
     if (ih->isKeyPressed(SDL_SCANCODE_RIGHT)) {
         m_velocity.SetX(2);

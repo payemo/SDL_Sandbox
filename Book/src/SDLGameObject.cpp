@@ -14,15 +14,30 @@ SDLGameObject::SDLGameObject(const LoaderParams& params)
 
 void SDLGameObject::Draw()
 {
-    TextureManager::Instance()->DrawFrame(
+    if (m_velocity.GetX() > 0) {
+        TextureManager::Instance()->DrawFrame(
         m_textureId,
-        static_cast<int>(m_position.GetX()),
-        static_cast<int>(m_position.GetY()),
+        static_cast<Uint32>(m_position.GetX()),
+        static_cast<Uint32>(m_position.GetY()),
+        m_w,
+        m_h,
+        m_currentRow,
+        m_currentFrame,
+        TheGame::Instance()->GetRenderer(),
+        SDL_FLIP_HORIZONTAL);
+    }
+    else {
+        TextureManager::Instance()->DrawFrame(
+        m_textureId,
+        static_cast<Uint32>(m_position.GetX()),
+        static_cast<Uint32>(m_position.GetY()),
         m_w,
         m_h,
         m_currentRow,
         m_currentFrame,
         TheGame::Instance()->GetRenderer());
+    }
+    
 }
 
 void SDLGameObject::Update()
