@@ -2,6 +2,7 @@
 #include "MenuState.h"
 #include "Game.h"
 #include "MenuButton.h"
+#include "PlayerState.h"
 
 const std::string MenuState::m_menuId = "MENU";
 
@@ -38,9 +39,9 @@ bool MenuState::OnEnter()
     }
 
     GameObject* playButton = new MenuButton(
-        *(new LoaderParams(100, 100, 400, 100, "playbutton")));
+        *(new LoaderParams(100, 100, 400, 100, "playbutton")), m_menuToPlay);
     GameObject* exitButton = new MenuButton(
-        *(new LoaderParams(100, 300, 400, 100, "exitbutton")));
+        *(new LoaderParams(100, 300, 400, 100, "exitbutton")), m_exitFromMenu);
 
     m_gameObjects.push_back(playButton);
     m_gameObjects.push_back(exitButton);
@@ -61,4 +62,14 @@ bool MenuState::OnExit()
     std::cout << "Exiting MenuState" << std::endl;
     return true;
 
+}
+
+void MenuState::m_menuToPlay()
+{
+    TheGame::Instance()->GetStateMachine().ChangeState(new PlayerState());
+}
+
+void MenuState::m_exitFromMenu()
+{
+    TheGame::Instance()->Quit();
 }

@@ -26,6 +26,7 @@ public:
     inline void Quit() { is_running = false; }
 
     inline SDL_Renderer& GetRenderer() const { return *renderer; }
+    inline GameStateMachine& GetStateMachine() const { return *m_gameStateMachine; }
 
 private:
     Game() {}

@@ -19,4 +19,8 @@ private:
     static const std::string m_menuId;
 
     std::vector<GameObject*> m_gameObjects;
+
+private: /// callback functions for menu items
+    static void m_menuToPlay();
+    static void m_exitFromMenu();
 };
