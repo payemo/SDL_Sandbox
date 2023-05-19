@@ -40,6 +40,8 @@ public:
 
     bool isKeyPressed(SDL_Scancode key);
 
+    void Reset();
+
     // handle keybord
     void onKeyPressed(SDL_Event& event);
 

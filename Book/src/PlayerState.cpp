@@ -3,11 +3,17 @@
 #include "GameObject.h"
 #include "Game.h"
 #include "Player.h"
+#include "InputHandler.h"
+#include "PauseState.h"
 
 const std::string PlayerState::m_playId = "PLAY";
 
 void PlayerState::Update()
 {
+    if (TheInputHandler::Instance()->isKeyPressed(SDL_SCANCODE_ESCAPE)) {
+        TheGame::Instance()->GetStateMachine().PushState(new PauseState());
+    }
+
     for (auto gameObj : m_gameObjects) {
         gameObj->Update();
     }

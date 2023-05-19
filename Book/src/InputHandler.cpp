@@ -133,6 +133,13 @@ bool InputHandler::isKeyPressed(SDL_Scancode key)
     return false;
 }
 
+void InputHandler::Reset()
+{
+    m_mouseButtonStates[LEFT] = false;
+    m_mouseButtonStates[RIGHT] = false;
+    m_mouseButtonStates[MIDDLE] = false;
+}
+
 void InputHandler::onKeyPressed(SDL_Event& event)
 {
     m_keyStates = SDL_GetKeyboardState(0);
