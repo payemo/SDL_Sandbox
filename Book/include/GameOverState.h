@@ -4,9 +4,8 @@
 #include "GameState.h"
 
 class GameObject;
-class SDLGameObject;
 
-class PlayerState : public GameState
+class GameOverState : public GameState
 {
 public:
     virtual void Update() override;
@@ -15,12 +14,13 @@ public:
     virtual bool OnEnter() override;
     virtual bool OnExit() override;
 
-    virtual const std::string& GetStateId() const override { return m_playId; }
-
-    bool CheckCollision(const SDLGameObject& obj1, const SDLGameObject& obj2);
+    virtual const std::string& GetStateId() const override;
 
 private:
-    static const std::string m_playId;
+    static void m_gameOverToMain();
+    static void m_restartPlay();
+
+    static const std::string m_gameOverId;
 
     std::vector<GameObject*> m_gameObjects;
 };

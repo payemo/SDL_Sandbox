@@ -9,8 +9,8 @@ public:
     {
     }
 
-    inline float GetX() { return m_x; }
-    inline float GetY() { return m_y; }
+    inline float GetX() const { return m_x; }
+    inline float GetY() const { return m_y; }
     inline void SetX(float x) { m_x = x; }
     inline void SetY(float y) { m_y = y; }
 

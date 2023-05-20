@@ -5,6 +5,9 @@
 #include "Player.h"
 #include "InputHandler.h"
 #include "PauseState.h"
+#include "Enemy.h"
+#include "GameOverState.h"
+#include "SDLGameObject.h"
 
 const std::string PlayerState::m_playId = "PLAY";
 
@@ -16,6 +19,12 @@ void PlayerState::Update()
 
     for (auto gameObj : m_gameObjects) {
         gameObj->Update();
+    }
+
+    SDLGameObject* obj1 = dynamic_cast<SDLGameObject*>(m_gameObjects[0]);
+    SDLGameObject* obj2 = dynamic_cast<SDLGameObject*>(m_gameObjects[1]);
+    if (CheckCollision(*obj1, *obj2)) {
+        TheGame::Instance()->GetStateMachine().PushState(new GameOverState());
     }
 }
 
@@ -32,10 +41,17 @@ bool PlayerState::OnEnter()
         return false;
     }
 
+    if (!TheTextureManager::Instance()->Load("assets/helicopter2.png", "helicopter2", TheGame::Instance()->GetRenderer())) {
+        return false;
+    }
+
     GameObject* player = new Player(
-        *(new LoaderParams(100, 100, 128, 55, "helicopter")));
+        *(new LoaderParams(500, 100, 128, 55, "helicopter")));
+    GameObject* enemy = new Enemy(
+        *(new LoaderParams(100, 100, 128, 55, "helicopter2")));
 
     m_gameObjects.push_back(player);
+    m_gameObjects.push_back(enemy);
 
     std::cout << "Entering PlayState" << std::endl;
     return true;
@@ -49,7 +65,24 @@ bool PlayerState::OnExit()
     m_gameObjects.clear();
 
     TheTextureManager::Instance()->ClearFromTextureMap("helicopter");
+    TheTextureManager::Instance()->ClearFromTextureMap("helicopter2");
 
     std::cout << "Exiting PlayState" << std::endl;
     return true;
+}
+
+bool PlayerState::CheckCollision(const SDLGameObject& obj1, const SDLGameObject& obj2)
+{
+    int x_a = obj1.GetPosition().GetX();
+    int y_a = obj1.GetPosition().GetY();
+
+    int x_b = obj2.GetPosition().GetX();
+    int y_b = obj2.GetPosition().GetY();
+
+    if ((x_a < (x_b + obj2.GetWidth()) && (x_a + obj1.GetWidth() > x_b) &&
+        (y_a < (y_b + obj2.GetHeight()) && (y_a + obj1.GetHeight() > y_b)))) {
+        return true;
+    }
+
+    return false;
 }
