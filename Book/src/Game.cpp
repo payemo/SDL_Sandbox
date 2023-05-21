@@ -3,8 +3,10 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "InputHandler.h"
-#include "MenuState.h"
+#include "MainMenuState.h"
 #include "PlayerState.h"
+#include "GameObjectFactory.h"
+#include "MenuButton.h"
 
 Game* Game::m_instance = nullptr;
 
@@ -58,16 +60,10 @@ bool Game::Init(const char* title, int xPos, int yPos, int width, int height, in
 
     TheInputHandler::Instance()->InitializedJoysticks();
 
-    /*GameObject* player = new Player;
-    player->Load(*(new LoaderParams(100, 100, 128, 82, "animate", 5)));
-    m_gameObjects.push_back(player);
-
-    GameObject* enemy = new Enemy;
-    enemy->Load(*(new LoaderParams(300, 300, 128, 82, "animate", 5)));
-    m_gameObjects.push_back(enemy);*/
+    TheGameObjectFactory::Instance()->RegisterType("MenuButton", new MenuButtonCreator());
 
     m_gameStateMachine = new GameStateMachine();
-    m_gameStateMachine->ChangeState(new MenuState());
+    m_gameStateMachine->ChangeState(new MainMenuState());
 
     is_running = true;
 

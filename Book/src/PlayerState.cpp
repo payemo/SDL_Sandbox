@@ -8,7 +8,6 @@
 #include "Enemy.h"
 #include "GameOverState.h"
 #include "SDLGameObject.h"
-#include "PlayerCreator.h"
 
 const std::string PlayerState::m_playId = "PLAY";
 

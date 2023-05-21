@@ -14,9 +14,20 @@ public:
 class GameObjectFactory
 {
 public:
+    static GameObjectFactory* Instance();
+
+public:
     bool RegisterType(const std::string& typeId, BaseCreator* creator);
     GameObject* Create(const std::string& typeId);
 
 private:
+    GameObjectFactory() {}
+    ~GameObjectFactory() {}
+
     std::map<std::string, BaseCreator*> m_creators;
+
+private:
+    static GameObjectFactory* m_instance;
 };
+
+typedef GameObjectFactory TheGameObjectFactory;

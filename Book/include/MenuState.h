@@ -6,21 +6,10 @@
 
 class MenuState : public GameState
 {
-public:
-    virtual void Update() override;
-    virtual void Render() override;
+protected:
+    typedef void(*Callback)();
 
-    virtual bool OnEnter() override;
-    virtual bool OnExit() override;
+    virtual void SetCallbacks(const std::vector<Callback>& callbacks) = 0;
 
-    virtual const std::string& GetStateId() const override { return m_menuId; }
-
-private:
-    static const std::string m_menuId;
-
-    std::vector<GameObject*> m_gameObjects;
-
-private: /// callback functions for menu items
-    static void m_menuToPlay();
-    static void m_exitFromMenu();
+    std::vector<Callback> m_callbacks;
 };

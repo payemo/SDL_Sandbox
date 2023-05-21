@@ -1,6 +1,6 @@
 #include "PauseState.h"
 #include "Game.h"
-#include "MenuState.h"
+#include "MainMenuState.h"
 #include "MenuButton.h"
 #include "InputHandler.h"
 
@@ -30,10 +30,10 @@ bool PauseState::OnEnter()
         return false;
     }
 
-    GameObject* resumeButton = new MenuButton(m_resumePlay);
+    GameObject* resumeButton = new MenuButton();
     resumeButton->Load(*(new LoaderParams(200, 100, 200, 80, "resumebutton", 0)));
 
-    GameObject* mainButton = new MenuButton(m_pauseToMain);
+    GameObject* mainButton = new MenuButton();
     mainButton->Load(*(new LoaderParams(200, 300, 200, 80, "mainbutton", 0)));
 
     m_gameObjects.push_back(resumeButton);
@@ -71,5 +71,5 @@ void PauseState::m_resumePlay()
 
 void PauseState::m_pauseToMain()
 {
-    TheGame::Instance()->GetStateMachine().ChangeState(new MenuState());
+    TheGame::Instance()->GetStateMachine().ChangeState(new MainMenuState());
 }

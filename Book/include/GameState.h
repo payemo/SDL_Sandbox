@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 class GameState
 {
@@ -12,4 +13,7 @@ public:
     virtual bool OnExit() = 0;
 
     virtual const std::string& GetStateId() const = 0;
+
+protected:
+    std::vector<std::string> m_textureIdList;
 };

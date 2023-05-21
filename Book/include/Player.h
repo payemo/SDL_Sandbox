@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDLGameObject.h"
+#include "GameObjectFactory.h"
 
 class Player : public SDLGameObject
 {
@@ -11,4 +12,12 @@ public:
 
 private:
     void HandleInput();
+};
+
+class PlayerCreator : public BaseCreator
+{
+    GameObject* Create() const
+    {
+        return new Player();
+    }
 };

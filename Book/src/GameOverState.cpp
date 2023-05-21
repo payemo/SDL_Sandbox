@@ -1,6 +1,6 @@
 #include "GameOverState.h"
 #include "Game.h"
-#include "MenuState.h"
+#include "MainMenuState.h"
 #include "PlayerState.h"
 #include "AnimatedGraphic.h"
 #include "MenuButton.h"
@@ -39,10 +39,10 @@ bool GameOverState::OnEnter()
     GameObject* gameOverText = new AnimatedGraphic;
     gameOverText->Load(*(new LoaderParams(200, 100, 190, 30, "gameovertext", 1, 0, 2)));
 
-    GameObject* mainButton = new MenuButton(m_gameOverToMain);
+    GameObject* mainButton = new MenuButton();
     mainButton->Load(*(new LoaderParams(200, 200, 200, 80, "mainbutton", 1)));
 
-    GameObject* restartButton = new MenuButton(m_restartPlay);
+    GameObject* restartButton = new MenuButton();
     restartButton->Load(*(new LoaderParams(200, 300, 200, 80, "restartbutton", 1)));
 
     m_gameObjects.push_back(gameOverText);
@@ -77,7 +77,7 @@ const std::string& GameOverState::GetStateId() const
 
 void GameOverState::m_gameOverToMain()
 {
-    TheGame::Instance()->GetStateMachine().ChangeState(new MenuState());
+    TheGame::Instance()->GetStateMachine().ChangeState(new MainMenuState());
 }
 
 void GameOverState::m_restartPlay()
