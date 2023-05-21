@@ -5,10 +5,11 @@
 class AnimatedGraphic : public SDLGameObject
 {
 public:
-    AnimatedGraphic(const LoaderParams& params, int animationSpeed);
+    AnimatedGraphic();
 
     virtual void Update() override;
+    virtual void Load(const LoaderParams& params) override;
 
 private:
-    int m_animationSpeed;
+    int m_animationSpeed{ 0 };
 };

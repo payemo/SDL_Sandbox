@@ -5,7 +5,7 @@
 class Player : public SDLGameObject
 {
 public:
-    Player(const LoaderParams& params);
+    Player();
 
     virtual void Update() override;
 

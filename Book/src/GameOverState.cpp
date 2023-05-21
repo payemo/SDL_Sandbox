@@ -36,12 +36,14 @@ bool GameOverState::OnEnter()
         return false;
     }
 
-    GameObject* gameOverText = new AnimatedGraphic(
-        *(new LoaderParams(200, 100, 190, 30, "gameovertext")), 2);
-    GameObject* mainButton = new MenuButton(
-        *(new LoaderParams(200, 200, 200, 80, "mainbutton")), m_gameOverToMain);
-    GameObject* restartButton = new MenuButton(
-        *(new LoaderParams(200, 300, 200, 80, "restartbutton")), m_restartPlay);
+    GameObject* gameOverText = new AnimatedGraphic;
+    gameOverText->Load(*(new LoaderParams(200, 100, 190, 30, "gameovertext", 1, 0, 2)));
+
+    GameObject* mainButton = new MenuButton(m_gameOverToMain);
+    mainButton->Load(*(new LoaderParams(200, 200, 200, 80, "mainbutton", 1)));
+
+    GameObject* restartButton = new MenuButton(m_restartPlay);
+    restartButton->Load(*(new LoaderParams(200, 300, 200, 80, "restartbutton", 1)));
 
     m_gameObjects.push_back(gameOverText);
     m_gameObjects.push_back(mainButton);

@@ -5,7 +5,8 @@
 class Enemy : public SDLGameObject
 {
 public:
-    Enemy(const LoaderParams& params);
+    Enemy();
 
     virtual void Update() override;
+    virtual void Load(const LoaderParams& params) override;
 };

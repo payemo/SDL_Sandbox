@@ -137,6 +137,7 @@
     <ClCompile Include="src\AnimatedGraphic.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameObjectFactory.cpp" />
     <ClCompile Include="src\GameOverState.cpp" />
     <ClCompile Include="src\GameStateMachine.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\GameObjectFactory.h" />
     <ClInclude Include="include\GameOverState.h" />
     <ClInclude Include="include\GameState.h" />
     <ClInclude Include="include\GameStateMachine.h" />
@@ -164,6 +166,7 @@
     <ClInclude Include="include\MenuState.h" />
     <ClInclude Include="include\PauseState.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PlayerCreator.h" />
     <ClInclude Include="include\PlayerState.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\TextureManager.h" />

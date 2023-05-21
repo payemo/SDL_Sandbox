@@ -1,8 +1,7 @@
 #include "Player.h"
 #include "InputHandler.h"
 
-Player::Player(const LoaderParams& params)
-    : SDLGameObject(params)
+Player::Player() : SDLGameObject()
 {
 }
 
@@ -13,7 +12,7 @@ void Player::Update()
 
     HandleInput();
 
-    m_currentFrame = int(((SDL_GetTicks() / 100) % 5));
+    m_currentFrame = int(((SDL_GetTicks() / 100) % m_numFrames));
 
     SDLGameObject::Update();
 }

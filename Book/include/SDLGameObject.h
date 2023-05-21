@@ -1,18 +1,18 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Vector2D.h"
 
 class SDLGameObject;
 
 class SDLGameObject : public GameObject
 {
 public:
-    SDLGameObject(const LoaderParams& params);
+    SDLGameObject();
 
     virtual void Draw() override;
     virtual void Update() override;
     virtual void Clean() override;
+    virtual void Load(const LoaderParams& params) override;
 
     inline const Vector2D& GetPosition() const { return m_position; }
     inline int GetWidth() const { return m_w; }

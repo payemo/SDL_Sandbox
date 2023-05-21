@@ -1,8 +1,12 @@
 #include "Enemy.h"
 
-Enemy::Enemy(const LoaderParams& params)
-    : SDLGameObject(params)
+Enemy::Enemy(): SDLGameObject()
 {
+}
+
+void Enemy::Load(const LoaderParams& params)
+{
+    SDLGameObject::Load(params);
     m_velocity.SetY(2);
     m_velocity.SetX(0.001);
 }
@@ -10,7 +14,7 @@ Enemy::Enemy(const LoaderParams& params)
 void Enemy::Update()
 {
 
-    m_currentFrame = int(((SDL_GetTicks() / 100) % 5));
+    m_currentFrame = int(((SDL_GetTicks() / 100) % m_numFrames));
 
     if (m_position.GetY() < 0) {
         m_velocity.SetY(2);
@@ -20,8 +24,4 @@ void Enemy::Update()
     }
 
     SDLGameObject::Update();
-
-    /*m_position.SetX(m_position.GetX() + 1);
-    m_position.SetY(m_position.GetY() + 1);
-    m_currentFrame = int(((SDL_GetTicks() / 100) % 6));*/
 }

@@ -1,11 +1,16 @@
 #include "AnimatedGraphic.h"
 
-AnimatedGraphic::AnimatedGraphic(const LoaderParams& params, int animationSpeed)
-    : SDLGameObject(params), m_animationSpeed(animationSpeed)
+AnimatedGraphic::AnimatedGraphic() : SDLGameObject()
 {
+}
+
+void AnimatedGraphic::Load(const LoaderParams& params)
+{
+    SDLGameObject::Load(params);
+    m_animationSpeed = params.GetAnimationSpeed();
 }
 
 void AnimatedGraphic::Update()
 {
-    m_currentFrame = int(((SDL_GetTicks() / (1000 / m_animationSpeed)) % 2));
+    m_currentFrame = int(((SDL_GetTicks() / (1000 / m_animationSpeed)) % m_numFrames));
 }

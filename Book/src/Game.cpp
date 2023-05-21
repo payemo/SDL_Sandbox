@@ -58,10 +58,13 @@ bool Game::Init(const char* title, int xPos, int yPos, int width, int height, in
 
     TheInputHandler::Instance()->InitializedJoysticks();
 
-    m_gameObjects.push_back(new Player(
-        *(new LoaderParams(100, 100, 128, 82, "animate"))));
-    m_gameObjects.push_back(new Enemy(
-        *(new LoaderParams(300, 300, 128, 82, "animate"))));
+    /*GameObject* player = new Player;
+    player->Load(*(new LoaderParams(100, 100, 128, 82, "animate", 5)));
+    m_gameObjects.push_back(player);
+
+    GameObject* enemy = new Enemy;
+    enemy->Load(*(new LoaderParams(300, 300, 128, 82, "animate", 5)));
+    m_gameObjects.push_back(enemy);*/
 
     m_gameStateMachine = new GameStateMachine();
     m_gameStateMachine->ChangeState(new MenuState());
