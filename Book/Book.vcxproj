@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SDL_VC\include\SDL_Image;F:\Coding\C++\SDL_Sandbox\Book\include;C:\SDL_VC\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Coding\C++\SDL_Sandbox\Book\external\tinyxml;C:\SDL_VC\include\SDL_Image;F:\Coding\C++\SDL_Sandbox\Book\include;C:\SDL_VC\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SDL_VC\include\SDL_Image;F:\Coding\C++\SDL_Sandbox\Book\include;C:\SDL_VC\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Coding\C++\SDL_Sandbox\Book\external\tinyxml;C:\SDL_VC\include\SDL_Image;F:\Coding\C++\SDL_Sandbox\Book\include;C:\SDL_VC\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="external\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="src\AnimatedGraphic.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="external\tinyxml\tinyxml2.h" />
     <ClInclude Include="include\AnimatedGraphic.h" />
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Game.h" />
