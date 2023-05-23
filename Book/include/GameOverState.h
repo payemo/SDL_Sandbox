@@ -1,11 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "GameState.h"
+#include "MenuState.h"
 
-class GameObject;
-
-class GameOverState : public GameState
+class GameOverState : public MenuState
 {
 public:
     virtual void Update() override;
@@ -17,10 +15,8 @@ public:
     virtual const std::string& GetStateId() const override;
 
 private:
-    static void m_gameOverToMain();
-    static void m_restartPlay();
-
     static const std::string m_gameOverId;
 
-    std::vector<GameObject*> m_gameObjects;
+    static void m_gameOverToMain();
+    static void m_restartPlay();
 };

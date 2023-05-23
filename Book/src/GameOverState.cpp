@@ -5,6 +5,7 @@
 #include "AnimatedGraphic.h"
 #include "MenuButton.h"
 #include "InputHandler.h"
+#include "StateParser.h"
 
 const std::string GameOverState::m_gameOverId = "GAMEOVER";
 
@@ -24,30 +25,14 @@ void GameOverState::Render()
 
 bool GameOverState::OnEnter()
 {
-    if (!TheTextureManager::Instance()->Load("assets/gameover.png", "gameovertext", TheGame::Instance()->GetRenderer())) {
-        return false;
-    }
+    StateParser stateParser;
+    stateParser.ParseState("assets/test.xml", m_gameOverId, m_gameObjects, m_textureIdList);
 
-    if (!TheTextureManager::Instance()->Load("assets/main.png", "mainbutton", TheGame::Instance()->GetRenderer())) {
-        return false;
-    }
+    m_callbacks.push_back(nullptr);
+    m_callbacks.push_back(m_gameOverToMain);
+    m_callbacks.push_back(m_restartPlay);
 
-    if (!TheTextureManager::Instance()->Load("assets/restart.png", "mainbutton", TheGame::Instance()->GetRenderer())) {
-        return false;
-    }
-
-    GameObject* gameOverText = new AnimatedGraphic;
-    gameOverText->Load(*(new LoaderParams(200, 100, 190, 30, "gameovertext", 1, 0, 2)));
-
-    GameObject* mainButton = new MenuButton();
-    mainButton->Load(*(new LoaderParams(200, 200, 200, 80, "mainbutton", 1)));
-
-    GameObject* restartButton = new MenuButton();
-    restartButton->Load(*(new LoaderParams(200, 300, 200, 80, "restartbutton", 1)));
-
-    m_gameObjects.push_back(gameOverText);
-    m_gameObjects.push_back(mainButton);
-    m_gameObjects.push_back(restartButton);
+    MenuState::SetCallbacks(m_callbacks);
 
     std::cout << "Entering PauseState" << std::endl;
     return true;
@@ -55,14 +40,16 @@ bool GameOverState::OnEnter()
 
 bool GameOverState::OnExit()
 {
-    for (auto obj : m_gameObjects) {
-        obj->Clean();
+    if (!m_gameObjects.empty()) {
+        for (auto gameObj : m_gameObjects) {
+            gameObj->Clean();
+        }
+        m_gameObjects.clear();
     }
-    m_gameObjects.clear();
 
-    TheTextureManager::Instance()->ClearFromTextureMap("gameovertext");
-    TheTextureManager::Instance()->ClearFromTextureMap("mainbutton");
-    TheTextureManager::Instance()->ClearFromTextureMap("restartbutton");
+    for (auto textureId : m_textureIdList) {
+        TheTextureManager::Instance()->ClearFromTextureMap(textureId);
+    }
 
     TheInputHandler::Instance()->Reset();
 

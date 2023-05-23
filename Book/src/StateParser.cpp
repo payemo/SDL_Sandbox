@@ -11,7 +11,7 @@ bool StateParser::ParseState(
 {
     tinyxml2::XMLDocument xmlDoc;
 
-    if (xmlDoc.LoadFile("assets/test.xml") == tinyxml2::XML_SUCCESS) {
+    if (xmlDoc.LoadFile(stateFile) == tinyxml2::XML_SUCCESS) {
         tinyxml2::XMLElement* root = xmlDoc.RootElement();
 
         if (root) {

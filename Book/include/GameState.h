@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "GameObject.h"
 
 class GameState
 {
@@ -15,5 +16,6 @@ public:
     virtual const std::string& GetStateId() const = 0;
 
 protected:
+    std::vector<GameObject*> m_gameObjects;
     std::vector<std::string> m_textureIdList;
 };

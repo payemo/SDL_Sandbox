@@ -21,6 +21,4 @@ public:
 
 private:
     static const std::string m_playId;
-
-    std::vector<GameObject*> m_gameObjects;
 };

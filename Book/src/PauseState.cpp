@@ -3,6 +3,7 @@
 #include "MainMenuState.h"
 #include "MenuButton.h"
 #include "InputHandler.h"
+#include "StateParser.h"
 
 const std::string PauseState::m_pauseId = "PAUSE";
 
@@ -22,22 +23,14 @@ void PauseState::Render()
 
 bool PauseState::OnEnter()
 {
-    if (!TheTextureManager::Instance()->Load("assets/resume.png", "resumebutton", TheGame::Instance()->GetRenderer())) {
-        return false;
-    }
+    StateParser stateParser;
+    stateParser.ParseState("assets/test.xml", m_pauseId, m_gameObjects, m_textureIdList);
 
-    if (!TheTextureManager::Instance()->Load("assets/main.png", "mainbutton", TheGame::Instance()->GetRenderer())) {
-        return false;
-    }
+    m_callbacks.push_back(nullptr);
+    m_callbacks.push_back(m_pauseToMain);
+    m_callbacks.push_back(m_resumePlay);
 
-    GameObject* resumeButton = new MenuButton();
-    resumeButton->Load(*(new LoaderParams(200, 100, 200, 80, "resumebutton", 0)));
-
-    GameObject* mainButton = new MenuButton();
-    mainButton->Load(*(new LoaderParams(200, 300, 200, 80, "mainbutton", 0)));
-
-    m_gameObjects.push_back(resumeButton);
-    m_gameObjects.push_back(mainButton);
+    MenuState::SetCallbacks(m_callbacks);
 
     std::cout << "Entering PauseState" << std::endl;
     return true;
@@ -45,16 +38,19 @@ bool PauseState::OnEnter()
 
 bool PauseState::OnExit()
 {
-    for (auto obj : m_gameObjects) {
-        obj->Clean();
+    if (!m_gameObjects.empty()) {
+        for (auto gameObj : m_gameObjects) {
+            gameObj->Clean();
+        }
+        m_gameObjects.clear();
     }
-    m_gameObjects.clear();
 
-    TheTextureManager::Instance()->ClearFromTextureMap("resumebutton");
-    TheTextureManager::Instance()->ClearFromTextureMap("mainbutton");
+    for (auto textureId : m_textureIdList) {
+        TheTextureManager::Instance()->ClearFromTextureMap(textureId);
+    }
 
     TheInputHandler::Instance()->Reset();
-
+    
     std::cout << "Exiting PauseState" << std::endl;
     return true;
 }
