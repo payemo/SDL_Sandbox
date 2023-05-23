@@ -36,11 +36,7 @@ private:
     SDL_Window* window{ nullptr };
     SDL_Renderer* renderer{ nullptr };
 
-    std::vector<GameObject*> m_gameObjects;
-
     GameStateMachine* m_gameStateMachine{ nullptr };
-
-    int currentFrame{ 0 };
 
     bool is_running{ false };
 

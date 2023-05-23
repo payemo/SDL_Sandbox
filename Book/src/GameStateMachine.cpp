@@ -12,10 +12,8 @@ void GameStateMachine::ChangeState(GameState* state)
         if (m_gameStates.back()->GetStateId() == state->GetStateId()) {
             return;
         }
-        if (m_gameStates.back()->OnExit()) {
-            delete m_gameStates.back();
-            m_gameStates.pop_back();
-        }
+        m_gameStates.back()->OnExit();
+        m_gameStates.pop_back();
     }
 
     // push a new state
@@ -26,10 +24,8 @@ void GameStateMachine::ChangeState(GameState* state)
 void GameStateMachine::PopState()
 {
     if (!m_gameStates.empty()) {
-        if (m_gameStates.back()->OnExit()) {
-            delete m_gameStates.back();
-            m_gameStates.pop_back();
-        }
+        m_gameStates.back()->OnExit();
+        m_gameStates.pop_back();
     }
 }
 
@@ -44,5 +40,16 @@ void GameStateMachine::Render()
 {
     if (!m_gameStates.empty()) {
         m_gameStates.back()->Render();
+    }
+}
+
+void GameStateMachine::Clean()
+{
+    if (!m_gameStates.empty()) {
+        m_gameStates.back()->OnExit();
+
+        delete m_gameStates.back();
+
+        m_gameStates.clear();
     }
 }

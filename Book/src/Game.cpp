@@ -96,6 +96,7 @@ void Game::Render() {
 
 void Game::Clean() {
     TheInputHandler::Instance()->Clean();
+    m_gameStateMachine->Clean();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
