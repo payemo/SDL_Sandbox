@@ -141,6 +141,7 @@
     <ClCompile Include="src\GameOverState.cpp" />
     <ClCompile Include="src\GameStateMachine.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
+    <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainMenuState.cpp" />
     <ClCompile Include="src\MenuButton.cpp" />
@@ -164,6 +165,8 @@
     <ClInclude Include="include\GameState.h" />
     <ClInclude Include="include\GameStateMachine.h" />
     <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\Layer.h" />
+    <ClInclude Include="include\Level.h" />
     <ClInclude Include="include\MainMenuState.h" />
     <ClInclude Include="include\MenuButton.h" />
     <ClInclude Include="include\MenuState.h" />
@@ -274,6 +277,21 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)assets</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)assets</DestinationFolders>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="assets\blocks1.png">
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)assets</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)assets</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="assets\blocks2.png">
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)assets</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)assets</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\blocks1.tsx" />
+    <None Include="assets\blocks2.tsx" />
+    <None Include="assets\map1.tmx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
