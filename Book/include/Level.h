@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include "LevelParser.h"
 
 class Layer;
 
@@ -21,7 +22,6 @@ struct Tileset
 class Level
 {
 public:
-    Level();
     ~Level() {}
 
     void Update();
@@ -29,6 +29,10 @@ public:
 
     inline const std::vector<Tileset>& GetTilesets() { return m_tilesets; }
     inline const std::vector<Layer*>& GetLayers() { return m_layers; }
+
+private:
+    friend class LevelParser;
+    Level();
 
 private:
     std::vector<Tileset> m_tilesets;
