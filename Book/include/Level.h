@@ -11,7 +11,7 @@ struct Tileset
     int firstGridId;
     int tileWidth;
     int tileHeight;
-    int specing;
+    int spacing;
     int margin;
     int width;
     int height;
@@ -28,6 +28,8 @@ public:
     void Render();
 
     inline const std::vector<Tileset>& GetTilesets() { return m_tilesets; }
+    inline void AddTileset(const Tileset& tileset) { m_tilesets.push_back(tileset); }
+
     inline const std::vector<Layer*>& GetLayers() { return m_layers; }
 
 private:

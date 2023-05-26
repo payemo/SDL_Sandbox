@@ -78,6 +78,9 @@
     <ClCompile Include="src\TileLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LevelParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -149,6 +152,9 @@
     <ClInclude Include="include\TileLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\LevelParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="assets\animate.bmp">
@@ -194,10 +200,6 @@
     <CopyFileToFolders Include="assets\blocks2.png">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\map1.tmx" />
-    <None Include="assets\blocks1.tsx" />
-    <None Include="assets\blocks2.tsx" />
+    <CopyFileToFolders Include="assets\map1.tmx" />
   </ItemGroup>
 </Project>
