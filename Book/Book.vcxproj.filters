@@ -81,6 +81,9 @@
     <ClCompile Include="src\LevelParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="external\base64\base64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -155,6 +158,15 @@
     <ClInclude Include="include\LevelParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="external\zlib\include\zconf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="external\zlib\include\zlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="external\base64\base64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="assets\animate.bmp">
@@ -201,5 +213,9 @@
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="assets\map1.tmx" />
+    <CopyFileToFolders Include="external\zlib\zlib.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="external\zlib\lib\zlib.lib" />
   </ItemGroup>
 </Project>

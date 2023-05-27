@@ -6,6 +6,7 @@
 class Level;
 struct Tileset;
 class Layer;
+class TileLayer;
 
 class LevelParser
 {
@@ -15,9 +16,8 @@ public:
 private:
     const Tileset& ParseTileset(tinyxml2::XMLElement& tilesetRoot);
 
-    void ParseTileLayer(
+    TileLayer& ParseTileLayer(
         tinyxml2::XMLElement& tileElement,
-        const std::vector<Layer*>& layers,
         const std::vector<Tileset>& tilesets);
 
 private:
