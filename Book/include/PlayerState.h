@@ -5,6 +5,7 @@
 
 class GameObject;
 class SDLGameObject;
+class Level;
 
 class PlayerState : public GameState
 {
@@ -21,4 +22,7 @@ public:
 
 private:
     static const std::string m_playId;
+
+private:
+    Level* m_level{ nullptr };
 };

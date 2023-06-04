@@ -30,7 +30,7 @@ public:
     inline const std::vector<Tileset>& GetTilesets() { return m_tilesets; }
     inline void AddTileset(const Tileset& tileset) { m_tilesets.push_back(tileset); }
 
-    inline const std::vector<Layer*>& GetLayers() { return m_layers; }
+    inline std::vector<Layer*>& GetLayers() { return m_layers; }
     inline void AddLayer(Layer* layer) { m_layers.push_back(layer); }
 
 private:

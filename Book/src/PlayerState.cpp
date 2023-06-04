@@ -9,6 +9,8 @@
 #include "GameOverState.h"
 #include "SDLGameObject.h"
 #include "StateParser.h"
+#include "LevelParser.h"
+#include "Level.h"
 
 const std::string PlayerState::m_playId = "PLAY";
 
@@ -18,7 +20,7 @@ void PlayerState::Update()
         TheGame::Instance()->GetStateMachine().PushState(new PauseState());
     }
 
-    for (auto gameObj : m_gameObjects) {
+    /*for (auto gameObj : m_gameObjects) {
         gameObj->Update();
     }
 
@@ -26,20 +28,27 @@ void PlayerState::Update()
     SDLGameObject* obj2 = dynamic_cast<SDLGameObject*>(m_gameObjects[1]);
     if (CheckCollision(*obj1, *obj2)) {
         TheGame::Instance()->GetStateMachine().PushState(new GameOverState());
+    }*/
+
+    if (m_level != nullptr) {
+        m_level->Update();
     }
 }
 
 void PlayerState::Render()
 {
-    for (auto gameObj : m_gameObjects) {
-        gameObj->Draw();
+    if (m_level != nullptr) {
+        m_level->Render();
     }
 }
 
 bool PlayerState::OnEnter()
 {
-    StateParser stateParser;
-    stateParser.ParseState("assets/test.xml", m_playId, m_gameObjects, m_textureIdList);
+    /*StateParser stateParser;
+    stateParser.ParseState("assets/test.xml", m_playId, m_gameObjects, m_textureIdList);*/
+
+    LevelParser levelParser;
+    m_level = &levelParser.ParseLevel("assets/map1.tmx");
 
     std::cout << "Entering PlayState" << std::endl;
     return true;

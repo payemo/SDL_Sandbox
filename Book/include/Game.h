@@ -28,10 +28,14 @@ public:
     inline SDL_Renderer& GetRenderer() const { return *renderer; }
     inline GameStateMachine& GetStateMachine() const { return *m_gameStateMachine; }
 
+    inline int GetWidth() const { return m_width; }
+    inline int GetHeight() const { return m_height; }
+
+private:
+    static Game* m_instance;
+
 private:
     Game() {}
-
-    static Game* m_instance;
 
     SDL_Window* window{ nullptr };
     SDL_Renderer* renderer{ nullptr };
@@ -39,6 +43,10 @@ private:
     GameStateMachine* m_gameStateMachine{ nullptr };
 
     bool is_running{ false };
+
+
+    int m_width;
+    int m_height;
 
 };
 

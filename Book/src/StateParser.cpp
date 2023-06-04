@@ -101,7 +101,7 @@ tinyxml2::XMLElement* StateParser::GetXmlElement(
     tinyxml2::XMLElement* child = root.FirstChildElement();
 
     while (child != nullptr) {
-        if (child->Value() == name) {
+        if (child->Value() == std::string(name)) {
             foundElement = child;
             break;
         }

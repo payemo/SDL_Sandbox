@@ -40,7 +40,7 @@
  <objectgroup id="8" name="Helicopter layer">
   <object id="9" name="Heliccopter" type="Player" x="321" y="158" width="93" height="63">
    <properties>
-    <property name="numFrames" type="int" value="4"/>
+    <property name="NumFrames" type="int" value="4"/>
     <property name="textureHeight" type="int" value="55"/>
     <property name="textureID" value="helicopter"/>
     <property name="textureWidth" type="int" value="128"/>

@@ -11,7 +11,7 @@ class TileLayer;
 class LevelParser
 {
 public:
-    const Level& ParseLevel(const char* levelFile);
+    Level& ParseLevel(const char* levelFile);
 
 private:
     const Tileset& ParseTileset(tinyxml2::XMLElement& tilesetRoot);
@@ -19,6 +19,10 @@ private:
     TileLayer& ParseTileLayer(
         tinyxml2::XMLElement& tileElement,
         const std::vector<Tileset>& tilesets);
+
+    void ParseTextures(tinyxml2::XMLElement& textureRoot);
+
+    void ParseObjectLayer(tinyxml2::XMLElement& objectElement, std::vector<Layer*>& layers);
 
 private:
     int m_tileSize;

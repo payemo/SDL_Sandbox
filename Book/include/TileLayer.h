@@ -29,4 +29,7 @@ private:
     Vector2D m_velocity;
 
     std::vector<std::vector<int>> m_tileIds;
+
+private:
+    const Tileset& GetTilesetById(int tileId);
 };

@@ -6,8 +6,10 @@
 #include "TextureManager.h"
 #include "Game.h"
 #include "TileLayer.h"
+#include "ObjectLayer.h"
+#include "GameObjectFactory.h"
 
-const Level& LevelParser::ParseLevel(const char* levelFile)
+Level& LevelParser::ParseLevel(const char* levelFile)
 {
     tinyxml2::XMLDocument levelDocument;
     levelDocument.LoadFile(levelFile);
@@ -21,11 +23,24 @@ const Level& LevelParser::ParseLevel(const char* levelFile)
     m_width = root->IntAttribute("width");
     m_height = root->IntAttribute("height");
 
+    // Parse textures
+    {
+        tinyxml2::XMLElement* properties = root->FirstChildElement();
+        tinyxml2::XMLElement* child = properties->FirstChildElement();
+
+        while (child != nullptr) {
+            if (child->Value() == std::string("property")) {
+                ParseTextures(*child);
+            }
+            child = child->NextSiblingElement();
+        }
+    }
+
     // Parse the tilesets
     {
         tinyxml2::XMLElement* child = root->FirstChildElement();
         while (child != nullptr) {
-            if (child->Value() == "tileset") {
+            if (child->Value() == std::string("tileset")) {
                 level->AddTileset(ParseTileset(*child));
             }
             child = child->NextSiblingElement();
@@ -36,10 +51,20 @@ const Level& LevelParser::ParseLevel(const char* levelFile)
     {
         tinyxml2::XMLElement* child = root->FirstChildElement();
         while (child != nullptr) {
-            if (child->Value() == "tileset") {
-                Layer& layer = ParseTileLayer(*child, level->GetTilesets());
-                level->AddLayer(&layer);
+            if (child->Value() == std::string("objectgroup") ||
+                child->Value() == std::string("layer")) {
+
+                if (child->FirstChildElement()->Value() == std::string("object")) {
+                    ParseObjectLayer(*child, level->GetLayers());
+                }
+
+                if (child->FirstChildElement()->Value() == std::string("data")) {
+                    Layer& layer = ParseTileLayer(*child, level->GetTilesets());
+                    level->AddLayer(&layer);
+                }
             }
+            
+            child = child->NextSiblingElement();
         }
     }
 
@@ -61,7 +86,7 @@ const Tileset& LevelParser::ParseTileset(tinyxml2::XMLElement& tilesetRoot)
     tileset.tileHeight = tilesetRoot.IntAttribute("tileheight");
     tileset.spacing = tilesetRoot.IntAttribute("spacing");
     tileset.margin = tilesetRoot.IntAttribute("margin");
-    tileset.name = tilesetRoot.IntAttribute("name");
+    tileset.name = tilesetRoot.Attribute("name");
 
     tileset.numColumns = tileset.width / (tileset.width + tileset.spacing);
 
@@ -83,7 +108,7 @@ TileLayer& LevelParser::ParseTileLayer(
         tinyxml2::XMLElement* child = tileElement.FirstChildElement();
 
         while (child != nullptr) {
-            if (child->Value() == "data") {
+            if (child->Value() == std::string("data")) {
                 dataNode = child;
                 break;
             }
@@ -97,6 +122,8 @@ TileLayer& LevelParser::ParseTileLayer(
                 tinyxml2::XMLText* text = node->ToText();
                 std::string s = text->Value();
                 decodeIds = base64_decode(s);
+
+                node = node->NextSiblingElement();
             }
         }
     }
@@ -120,4 +147,77 @@ TileLayer& LevelParser::ParseTileLayer(
     tileLayer->SetTileIds(data);
 
     return *tileLayer;
+}
+
+void LevelParser::ParseTextures(tinyxml2::XMLElement& textureRoot)
+{
+    auto value = textureRoot.Attribute("value");
+    auto name = textureRoot.Attribute("name");
+    TheTextureManager::Instance()->Load(value, name, TheGame::Instance()->GetRenderer());
+}
+
+void LevelParser::ParseObjectLayer(tinyxml2::XMLElement& objectElement, std::vector<Layer*>& layers)
+{
+    // Cteate object layer
+    ObjectLayer* objectLayer = new ObjectLayer;
+
+    std::cout << objectElement.FirstChildElement()->Value() << std::endl;
+
+    tinyxml2::XMLElement* child = objectElement.FirstChildElement();
+    
+    while (child != nullptr) {
+        std::cout << child->Value() << std::endl;
+
+        if (child->Value() == std::string("object")) {
+            int x, y, w, h, numFrames, callbackId = 0, animSpeed = 0;
+            std::string textureId;
+            std::string type;
+
+            x = child->IntAttribute("x");
+            y = child->IntAttribute("y");
+            type = child->Attribute("type");
+
+            GameObject* gameObject = TheGameObjectFactory::Instance()->Create(type);
+
+            // get property values
+            tinyxml2::XMLElement* properties = child->FirstChildElement();
+
+            while (properties != nullptr) {
+                if (properties->Value() == std::string("properties")) {
+                    tinyxml2::XMLElement* prop = properties->FirstChildElement();
+
+                    while (prop != nullptr) {
+                        if (prop->Value() == std::string("property")) {
+                            if (prop->Attribute("name") == std::string("numFrames")) {
+                                numFrames = prop->IntAttribute("value");
+                            }
+                            else if (prop->Attribute("name") == std::string("textureHeight")) {
+                                h = prop->IntAttribute("value");
+                            }
+                            else if (prop->Attribute("name") == std::string("textureID")) {
+                                textureId = prop->Attribute("value");
+                            }
+                            else if (prop->Attribute("name") == std::string("textureWidth")) {
+                                w = prop->IntAttribute("value");
+                            }
+                            else if (prop->Attribute("name") == std::string("callbackID")) {
+                                callbackId = prop->IntAttribute("value");
+                            }
+                            else if (prop->Attribute("name") == std::string("animSpeed")) {
+                                animSpeed = prop->IntAttribute("value");
+                            }
+                        }
+                        prop = prop->NextSiblingElement();
+                    }
+                }
+                properties = properties->NextSiblingElement();
+            }
+            gameObject->Load(
+                *(new LoaderParams(x, y, w, h, textureId, numFrames, callbackId, animSpeed)));
+
+            objectLayer->GetGameObjects().push_back(gameObject);
+        }
+        child = child->NextSiblingElement();
+    }
+    layers.push_back(objectLayer);
 }

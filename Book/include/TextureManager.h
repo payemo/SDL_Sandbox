@@ -28,6 +28,18 @@ public:
 			SDL_Renderer& renderer,
 			SDL_RendererFlip flipOption = SDL_FLIP_NONE);
 
+		void DrawTile(
+			const std::string& id,
+			int margin,
+			int spacing,
+			int x,
+			int y,
+			int width,
+			int height,
+			int currentRow,
+			int currentFrame,
+			SDL_Renderer& renderer);
+
 		void ClearFromTextureMap(const std::string& id);
 
 private:
